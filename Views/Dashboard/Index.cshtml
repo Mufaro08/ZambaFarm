@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+
+<h2>Dashboard</h2>
+
+<div id="speciesChart" style="width: 100%; height: 400px;"></div>
+
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    google.charts.load('current', { packages: ['corechart', 'bar'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Species', 'Count'],
+            ['Rabbits', @ViewBag.TotalRabbits],
+            ['Pigs', @ViewBag.TotalPigs],
+            ['Cattles', @ViewBag.TotalCattles],
+            ['Goats', @ViewBag.TotalGoats]
+        ]);
+
+        var options = {
+            title: 'Animal Species Counts',
+            chartArea: { width: '50%' },
+            hAxis: {
+                title: 'Count',
+                minValue: 0
+            },
+            vAxis: {
+                title: 'Species'
+            }
+        };
+
+        var chart = new google.visualization.BarChart(document.getElementById('speciesChart'));
+        chart.draw(data, options);
+    }
+</script>
