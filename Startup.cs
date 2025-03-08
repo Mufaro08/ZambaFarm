@@ -31,7 +31,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddDbContext<FarmContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("ZambaFarmContext")));
+            options.UseSqlServer(Configuration.GetConnectionString("FarmContext")));
 
         services.AddControllersWithViews();
         // Add other services as needed

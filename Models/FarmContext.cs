@@ -9,6 +9,7 @@ namespace ZambaFarm.Models
         public DbSet<Pig> Pigs { get; set; }
         public DbSet<Cattle> Cattles { get; set; }
         public DbSet<Goat> Goats { get; set; }
+        public DbSet <Turkey> Turkey { get; set; }
 
         public FarmContext(DbContextOptions<FarmContext> options)
             : base(options)
@@ -45,6 +46,12 @@ namespace ZambaFarm.Models
                 .HasMany(g => g.Offspring)
                 .WithOne(g => g.Mother)
                 .HasForeignKey(g => g.MotherId)
+                .OnDelete(DeleteBehavior.NoAction); // Fixes foreign key issue
+
+            modelBuilder.Entity<Turkey>()
+                .HasMany(t => t.Offspring)
+                .WithOne(t => t.Mother)
+                .HasForeignKey(t => t.MotherId)
                 .OnDelete(DeleteBehavior.NoAction); // Fixes foreign key issue
         }
     }
