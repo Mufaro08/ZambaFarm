@@ -9,7 +9,7 @@ namespace ZambaFarm.Models
         public DbSet<Pig> Pigs { get; set; }
         public DbSet<Cattle> Cattles { get; set; }
         public DbSet<Goat> Goats { get; set; }
-        public DbSet <Turkey> Turkey { get; set; }
+        public DbSet <Turkey> Turkeys { get; set; }
 
         public FarmContext(DbContextOptions<FarmContext> options)
             : base(options)
