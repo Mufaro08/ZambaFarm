@@ -2,3 +2,10 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+<script>
+    var toastElements = document.querySelectorAll('.toast');
+    toastElements.forEach(function (toastElement) {
+        var toast = new bootstrap.Toast(toastElement);
+        toast.show();
+    });
+</script>

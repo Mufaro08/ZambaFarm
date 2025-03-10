@@ -1,0 +1,77 @@
+﻿@model IEnumerable<ZambaFarm.Models.Pig>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TagNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BirthDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPregnant)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsNursing)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsMating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MatingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mother)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TagNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BirthDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPregnant)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsNursing)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsMating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MatingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mother.PigId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PigId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PigId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PigId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

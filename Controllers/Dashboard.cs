@@ -5,16 +5,21 @@ namespace FarmMonitor.Controllers
 {
     public class DashboardController : Controller
     {
-        private FarmContext db = new FarmContext();
+        private readonly FarmContext _context;
+
+        public DashboardController(FarmContext context)
+        {
+            _context = context;
+        }
 
         // GET: Dashboard
         public ActionResult Index()
         {
-            var allRabbits = db.Rabbits.ToList();
-            var allPigs = db.Pigs.ToList();
-            var allCattles = db.Cattles.ToList();
-            var allGoats = db.Goats.ToList();
-            var allTurkeys = db.Turkeys.ToList(); // Fetch data for turkeys
+            var allRabbits = _context.Rabbits.ToList();
+            var allPigs = _context.Pigs.ToList();
+            var allCattles = _context.Cattles.ToList();
+            var allGoats = _context.Goats.ToList();
+            var allTurkeys = _context.Turkeys.ToList(); // Fetch data for turkeys
 
             // Aggregate data for the dashboard
             var totalRabbits = allRabbits.Count;

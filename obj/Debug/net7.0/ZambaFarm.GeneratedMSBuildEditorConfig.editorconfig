@@ -20,8 +20,52 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Cattle/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0dGxlXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Cattle/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0dGxlXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Cattle/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0dGxlXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Cattle/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0dGxlXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Cattle/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0dGxlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Mfaro/source/repos/ZambaFarm/Views/Dashboard/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Goats/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR29hdHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Goats/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR29hdHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Goats/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR29hdHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Goats/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR29hdHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Goats/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR29hdHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/HomeController1/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZUNvbnRyb2xsZXIxXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mfaro/source/repos/ZambaFarm/Views/Home/Index.cshtml]
@@ -30,6 +74,46 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Mfaro/source/repos/ZambaFarm/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Pigs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGlnc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Pigs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGlnc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Pigs/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGlnc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Pigs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGlnc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Pigs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGlnc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Rabbits/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFiYml0c1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Rabbits/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFiYml0c1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Rabbits/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFiYml0c1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Rabbits/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFiYml0c1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Rabbits/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFiYml0c1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mfaro/source/repos/ZambaFarm/Views/Shared/Error.cshtml]
@@ -42,6 +126,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Mfaro/source/repos/ZambaFarm/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Turkeys/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHVya2V5c1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Turkeys/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHVya2V5c1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Turkeys/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHVya2V5c1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Turkeys/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHVya2V5c1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Turkeys/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHVya2V5c1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mfaro/source/repos/ZambaFarm/Views/_ViewImports.cshtml]
