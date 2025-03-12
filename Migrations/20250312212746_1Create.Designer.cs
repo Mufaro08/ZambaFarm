@@ -12,8 +12,8 @@ using ZambaFarm.Models;
 namespace ZambaFarm.Migrations
 {
     [DbContext(typeof(FarmContext))]
-    [Migration("20250303221231_4Create")]
-    partial class _4Create
+    [Migration("20250312212746_1Create")]
+    partial class _1Create
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -391,6 +391,45 @@ namespace ZambaFarm.Migrations
                     b.ToTable("Rabbits");
                 });
 
+            modelBuilder.Entity("ZambaFarm.Models.Turkey", b =>
+                {
+                    b.Property<int>("TurkeyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TurkeyId"));
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("BreedingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsBreeding")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("MotherId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<string>("TagNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("float");
+
+                    b.HasKey("TurkeyId");
+
+                    b.HasIndex("MotherId");
+
+                    b.ToTable("turkeys", (string)null);
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -486,6 +525,17 @@ namespace ZambaFarm.Migrations
                     b.Navigation("Mother");
                 });
 
+            modelBuilder.Entity("ZambaFarm.Models.Turkey", b =>
+                {
+                    b.HasOne("ZambaFarm.Models.Turkey", "Mother")
+                        .WithMany("Offspring")
+                        .HasForeignKey("MotherId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Mother");
+                });
+
             modelBuilder.Entity("ZambaFarm.Models.Cattle", b =>
                 {
                     b.Navigation("Offspring");
@@ -502,6 +552,11 @@ namespace ZambaFarm.Migrations
                 });
 
             modelBuilder.Entity("ZambaFarm.Models.Rabbit", b =>
+                {
+                    b.Navigation("Offspring");
+                });
+
+            modelBuilder.Entity("ZambaFarm.Models.Turkey", b =>
                 {
                     b.Navigation("Offspring");
                 });

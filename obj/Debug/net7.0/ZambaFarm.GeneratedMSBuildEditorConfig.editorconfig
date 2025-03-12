@@ -20,24 +20,24 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Cattle/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0dGxlXENyZWF0ZS5jc2h0bWw=
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Cattles/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0dGxlc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Cattle/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0dGxlXERlbGV0ZS5jc2h0bWw=
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Cattles/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0dGxlc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Cattle/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0dGxlXERldGFpbHMuY3NodG1s
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Cattles/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0dGxlc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Cattle/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0dGxlXEVkaXQuY3NodG1s
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Cattles/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0dGxlc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Cattle/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0dGxlXEluZGV4LmNzaHRtbA==
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Cattles/Indexed.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0dGxlc1xJbmRleGVkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mfaro/source/repos/ZambaFarm/Views/Dashboard/Index.cshtml]

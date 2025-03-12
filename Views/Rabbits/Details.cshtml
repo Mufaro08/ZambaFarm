@@ -1,66 +1,49 @@
 ﻿@model ZambaFarm.Models.Rabbit
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Rabbit Details";
 }
 
-<h1>Details</h1>
+<div class="container mt-5">
+    <!-- Page Header -->
+    <div class="row justify-content-between align-items-center mb-4">
+        <div class="col-md-8">
+            <h2 class="text-primary">Rabbit Details</h2>
+            <p class="text-muted">Detailed information about the selected rabbit</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-arrow-left-circle me-2"></i>Back to Dashboard</a>
+        </div>
+    </div>
 
-<div>
-    <h4>Rabbit</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TagNumber)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TagNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BirthDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BirthDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsPregnant)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsPregnant)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsNursing)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsNursing)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsMating)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsMating)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MatingDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MatingDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Mother)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Mother.RabbitId)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.RabbitId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <!-- Rabbit Information -->
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <dl class="row">
+                <dt class="col-sm-4">Tag Number</dt>
+                <dd class="col-sm-8">@Model.TagNumber</dd>
+
+                <dt class="col-sm-4">Gender</dt>
+                <dd class="col-sm-8">@Model.Gender</dd>
+
+                <dt class="col-sm-4">Birth Date</dt>
+                <dd class="col-sm-8">@Model.BirthDate.ToShortDateString()</dd>
+
+                <dt class="col-sm-4">Age</dt>
+                <dd class="col-sm-8">@Model.Age months</dd>
+
+                <dt class="col-sm-4">Status</dt>
+                <dd class="col-sm-8">@Model.Status</dd>
+
+                <dt class="col-sm-4">Pregnancy</dt>
+                <dd class="col-sm-8">@Model.IsPregnant ? "Yes" : "No"</dd>
+
+                <dt class="col-sm-4">Nursing</dt>
+                <dd class="col-sm-8">@Model.IsNursing ? "Yes" : "No"</dd>
+
+                <dt class="col-sm-4">Mating</dt>
+                <dd class="col-sm-8">@Model.IsMating ? "Yes" : "No"</dd>
+            </dl>
+        </div>
+    </div>
 </div>

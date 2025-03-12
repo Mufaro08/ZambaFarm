@@ -1,15 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ZambaFarm.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ZambaFarm.Controllers
 {
-     // Enforce authentication for all actions
     public class RabbitsController : Controller
     {
         private readonly FarmContext _context;
@@ -22,43 +19,20 @@ namespace ZambaFarm.Controllers
         // GET: Rabbits
         public async Task<IActionResult> Index()
         {
-            var farmContext = _context.Rabbits.Include(r => r.Mother);
-            return View(await farmContext.ToListAsync());
-        }
-
-        // GET: Rabbits/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Rabbits == null)
-            {
-                TempData["ErrorMessage"] = "Rabbit not found.";
-                return NotFound();
-            }
-
-            var rabbit = await _context.Rabbits
-                .Include(r => r.Mother)
-                .FirstOrDefaultAsync(m => m.RabbitId == id);
-
-            if (rabbit == null)
-            {
-                TempData["ErrorMessage"] = "Rabbit not found.";
-                return NotFound();
-            }
-
-            return View(rabbit);
+            var farmContext = _context.Rabbits.ToListAsync(); // Just get the rabbits without the mother relationship
+            return View(await farmContext);
         }
 
         // GET: Rabbits/Create
         public IActionResult Create()
         {
-            ViewData["MotherId"] = new SelectList(_context.Rabbits, "RabbitId", "RabbitId");
             return View();
         }
 
         // POST: Rabbits/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RabbitId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,MotherId")] Rabbit rabbit)
+        public async Task<IActionResult> Create([Bind("RabbitId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate")] Rabbit rabbit)
         {
             if (ModelState.IsValid)
             {
@@ -80,42 +54,34 @@ namespace ZambaFarm.Controllers
                 var validationErrors = ModelState.Values.SelectMany(v => v.Errors)
                                                         .Select(e => e.ErrorMessage)
                                                         .ToList();
-                TempData["ErrorMessage"] = "Validation failed for the following reasons: " + string.Join(", ", validationErrors);
+                TempData["ErrorMessage"] = "Validation failed: " + string.Join(", ", validationErrors);
             }
-
-            ViewData["MotherId"] = new SelectList(_context.Rabbits, "RabbitId", "RabbitId", rabbit.MotherId);
             return View(rabbit);
         }
-
 
         // GET: Rabbits/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Rabbits == null)
+            if (id == null)
             {
-                TempData["ErrorMessage"] = "Rabbit not found.";
                 return NotFound();
             }
 
             var rabbit = await _context.Rabbits.FindAsync(id);
             if (rabbit == null)
             {
-                TempData["ErrorMessage"] = "Rabbit not found.";
                 return NotFound();
             }
-
-            ViewData["MotherId"] = new SelectList(_context.Rabbits, "RabbitId", "RabbitId", rabbit.MotherId);
             return View(rabbit);
         }
 
         // POST: Rabbits/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RabbitId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,MotherId")] Rabbit rabbit)
+        public async Task<IActionResult> Edit(int id, [Bind("RabbitId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate")] Rabbit rabbit)
         {
             if (id != rabbit.RabbitId)
             {
-                TempData["ErrorMessage"] = "Rabbit not found.";
                 return NotFound();
             }
 
@@ -132,7 +98,6 @@ namespace ZambaFarm.Controllers
                 {
                     if (!RabbitExists(rabbit.RabbitId))
                     {
-                        TempData["ErrorMessage"] = "Rabbit not found.";
                         return NotFound();
                     }
                     else
@@ -140,78 +105,63 @@ namespace ZambaFarm.Controllers
                         throw;
                     }
                 }
-                catch (Exception ex)
-                {
-                    TempData["ErrorMessage"] = $"Error updating rabbit: {ex.Message}";
-                }
             }
-            else
-            {
-                TempData["ErrorMessage"] = "Validation failed. Please check your input.";
-            }
-
-            ViewData["MotherId"] = new SelectList(_context.Rabbits, "RabbitId", "RabbitId", rabbit.MotherId);
             return View(rabbit);
         }
 
-        // GET: Rabbits/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: Rabbits/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Rabbits == null)
+            if (id == null)
             {
-                TempData["ErrorMessage"] = "Rabbit not found.";
                 return NotFound();
             }
 
             var rabbit = await _context.Rabbits
-                .Include(r => r.Mother)
                 .FirstOrDefaultAsync(m => m.RabbitId == id);
 
             if (rabbit == null)
             {
-                TempData["ErrorMessage"] = "Rabbit not found.";
                 return NotFound();
             }
 
             return View(rabbit);
         }
-        [Authorize]
+
+
+        // GET: Rabbits/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var rabbit = await _context.Rabbits
+                .FirstOrDefaultAsync(m => m.RabbitId == id);
+            if (rabbit == null)
+            {
+                return NotFound();
+            }
+
+            return View(rabbit);
+        }
+
         // POST: Rabbits/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Rabbits == null)
-            {
-                TempData["ErrorMessage"] = "Entity set 'FarmContext.Rabbits' is null.";
-                return Problem("Entity set 'FarmContext.Rabbits' is null.");
-            }
-
-            try
-            {
-                var rabbit = await _context.Rabbits.FindAsync(id);
-                if (rabbit != null)
-                {
-                    _context.Rabbits.Remove(rabbit);
-                    await _context.SaveChangesAsync();
-                    TempData["SuccessMessage"] = "Rabbit deleted successfully!";
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "Rabbit not found.";
-                }
-            }
-            catch (Exception ex)
-            {
-                TempData["ErrorMessage"] = $"Error deleting rabbit: {ex.Message}";
-            }
-
+            var rabbit = await _context.Rabbits.FindAsync(id);
+            _context.Rabbits.Remove(rabbit);
+            await _context.SaveChangesAsync();
+            TempData["SuccessMessage"] = "Rabbit deleted successfully!";
             return RedirectToAction(nameof(Index));
         }
 
         private bool RabbitExists(int id)
         {
-            return (_context.Rabbits?.Any(e => e.RabbitId == id)).GetValueOrDefault();
+            return _context.Rabbits.Any(e => e.RabbitId == id);
         }
     }
 }

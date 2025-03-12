@@ -373,8 +373,7 @@ namespace ZambaFarm.Migrations
                     b.Property<DateTime?>("MatingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("MotherId")
-                        .IsRequired()
+                    b.Property<int?>("RabbitId1")
                         .HasColumnType("int");
 
                     b.Property<string>("TagNumber")
@@ -383,7 +382,7 @@ namespace ZambaFarm.Migrations
 
                     b.HasKey("RabbitId");
 
-                    b.HasIndex("MotherId");
+                    b.HasIndex("RabbitId1");
 
                     b.ToTable("Rabbits");
                 });
@@ -424,7 +423,7 @@ namespace ZambaFarm.Migrations
 
                     b.HasIndex("MotherId");
 
-                    b.ToTable("Turkeys");
+                    b.ToTable("turkeys", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -513,13 +512,9 @@ namespace ZambaFarm.Migrations
 
             modelBuilder.Entity("ZambaFarm.Models.Rabbit", b =>
                 {
-                    b.HasOne("ZambaFarm.Models.Rabbit", "Mother")
+                    b.HasOne("ZambaFarm.Models.Rabbit", null)
                         .WithMany("Offspring")
-                        .HasForeignKey("MotherId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Mother");
+                        .HasForeignKey("RabbitId1");
                 });
 
             modelBuilder.Entity("ZambaFarm.Models.Turkey", b =>

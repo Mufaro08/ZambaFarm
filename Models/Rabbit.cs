@@ -20,23 +20,11 @@ namespace ZambaFarm.Models
 
         public int Age => (DateTime.Now - BirthDate).Days / 30; // Age in months
 
-        // Apply conditional logic for IsPregnant
         [Display(Name = "Is Pregnant")]
-        public bool IsPregnant
-        {
-            get => Gender == "Female" ? _isPregnant : false;
-            set => _isPregnant = Gender == "Female" ? value : false;
-        }
-        private bool _isPregnant;
+        public bool IsPregnant { get; set; }
 
-        // Apply conditional logic for IsNursing
         [Display(Name = "Is Nursing")]
-        public bool IsNursing
-        {
-            get => Gender == "Female" ? _isNursing : false;
-            set => _isNursing = Gender == "Female" ? value : false;
-        }
-        private bool _isNursing;
+        public bool IsNursing { get; set; }
 
         public bool IsMating { get; set; }
         public DateTime? MatingDate { get; set; }
@@ -49,8 +37,9 @@ namespace ZambaFarm.Models
             ? (IsNursing ? "Nursing" : (IsPregnant ? "Pregnant" : (IsMating ? "Mating" : "None")))
             : "None";
 
-        public virtual ICollection<Rabbit> Offspring { get; set; }
-        public int? MotherId { get; set; }
-        public virtual Rabbit Mother { get; set; }
+       
+
+        // Initialize Offspring to avoid validation issues
+        public virtual ICollection<Rabbit> Offspring { get; set; } = new List<Rabbit>();
     }
 }

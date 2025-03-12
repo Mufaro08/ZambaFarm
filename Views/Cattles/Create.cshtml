@@ -1,20 +1,15 @@
 ﻿@model ZambaFarm.Models.Rabbit
 
 @{
-    ViewData["Title"] = "Edit Rabbit Details";
-    var genderOptions = new List<SelectListItem>
-    {
-        new SelectListItem { Value = "Male", Text = "Male" },
-        new SelectListItem { Value = "Female", Text = "Female" }
-    };
+    ViewData["Title"] = "Add New Rabbit";
 }
 
 <div class="container mt-5">
     <!-- Page Header -->
     <div class="row justify-content-between align-items-center mb-4">
         <div class="col-md-8">
-            <h2 class="text-primary">Edit Rabbit Details</h2>
-            <p class="text-muted">Update the details of the selected rabbit</p>
+            <h2 class="text-primary">Add New Rabbit</h2>
+            <p class="text-muted">Fill in the details to register a new rabbit</p>
         </div>
         <div class="col-md-4 text-md-end">
             <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-arrow-left-circle me-2"></i>Back to Dashboard</a>
@@ -24,35 +19,36 @@
     <!-- Form for Rabbit Data -->
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form asp-action="Edit">
-                <input type="hidden" asp-for="RabbitId" />
-
+            <form asp-action="Create">
                 <div class="mb-3">
                     <label for="TagNumber" class="form-label">Tag Number</label>
-                    <input type="text" class="form-control" asp-for="TagNumber" required />
+                    <input type="text" class="form-control" id="TagNumber" name="TagNumber" required />
                 </div>
                 <div class="mb-3">
                     <label for="Gender" class="form-label">Gender</label>
-                    <select class="form-control" asp-for="Gender" asp-items="genderOptions" required>
+                    <select class="form-control" id="Gender" name="Gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="BirthDate" class="form-label">Birth Date</label>
-                    <input type="date" class="form-control" asp-for="BirthDate" required />
+                    <input type="date" class="form-control" id="BirthDate" name="BirthDate" required />
                 </div>
                 <div class="mb-3">
                     <label for="IsPregnant" class="form-label">Is Pregnant?</label>
-                    <input type="checkbox" class="form-check-input" asp-for="IsPregnant" />
+                    <input type="checkbox" class="form-check-input" id="IsPregnant" name="IsPregnant" />
                 </div>
                 <div class="mb-3">
                     <label for="IsNursing" class="form-label">Is Nursing?</label>
-                    <input type="checkbox" class="form-check-input" asp-for="IsNursing" />
+                    <input type="checkbox" class="form-check-input" id="IsNursing" name="IsNursing" />
                 </div>
                 <div class="mb-3">
                     <label for="IsMating" class="form-label">Is Mating?</label>
-                    <input type="checkbox" class="form-check-input" asp-for="IsMating" />
+                    <input type="checkbox" class="form-check-input" id="IsMating" name="IsMating" />
                 </div>
-                <button type="submit" class="btn btn-warning w-100">Update Rabbit</button>
+                <button type="submit" class="btn btn-success w-100">Add Rabbit</button>
             </form>
         </div>
     </div>

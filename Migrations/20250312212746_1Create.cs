@@ -5,7 +5,7 @@
 namespace ZambaFarm.Migrations
 {
     /// <inheritdoc />
-    public partial class _2Create : Migration
+    public partial class _1Create : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

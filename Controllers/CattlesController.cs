@@ -9,11 +9,11 @@ using ZambaFarm.Models;
 
 namespace ZambaFarm.Controllers
 {
-    public class CattleController : Controller
+    public class CattlesController : Controller
     {
         private readonly FarmContext _context;
 
-        public CattleController(FarmContext context)
+        public CattlesController(FarmContext context)
         {
             _context = context;
         }

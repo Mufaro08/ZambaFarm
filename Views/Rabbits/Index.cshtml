@@ -25,7 +25,7 @@
                     <th>Tag Number</th>
                     <th>Gender</th>
                     <th>Birth Date</th>
-                    <th>Mother ID</th>
+                    
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -45,7 +45,7 @@
                             <td>@rabbit.TagNumber</td>
                             <td>@rabbit.Gender</td>
                             <td>@rabbit.BirthDate.ToShortDateString()</td>
-                            <td>@rabbit.MotherId</td>
+                            
                             <td class="text-center">
                                 <div class="d-flex justify-content-center">
                                     <a asp-action="Details" asp-route-id="@rabbit.RabbitId" class="btn btn-info btn-sm me-2">
