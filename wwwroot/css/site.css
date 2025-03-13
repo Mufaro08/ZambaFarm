@@ -20,3 +20,129 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Background Styling 
+body {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Card Styling
+.details-card {
+    background: #222;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    width: 50%;
+    margin: auto;
+}
+
+    /* Animated Border Effect 
+    .details-card::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg, #007bff, #dc3545, #007bff);
+        background-size: 200% 200%;
+        border-radius: 15px;
+        z-index: -1;
+        animation: borderMove 4s linear infinite;
+    }
+
+@keyframes borderMove {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Table Styling 
+.details-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .details-table th, .details-table td {
+        padding: 12px;
+        border-bottom: 2px solid #007bff; /* Primary color 
+        text-align: left;
+    }
+    /*
+    .details-table tr:nth-child(even) {
+        background-color: #333;
+    }
+
+/* Button Styling 
+.btn-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+*/
+/* Stylish card design for animal details */
+.details-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: black;
+}
+
+.details-card {
+    position: relative;
+    background-color: black;
+    color: yellow;
+    padding: 20px;
+    border-radius: 10px;
+    border: 5px solid transparent;
+    animation: borderAnimation 3s infinite linear;
+    box-shadow: 0 0 15px rgba(255, 255, 0, 0.7);
+}
+
+@keyframes borderAnimation {
+    0% {
+        border-color: red;
+    }
+
+    33% {
+        border-color: blue;
+    }
+
+    66% {
+        border-color: green;
+    }
+
+    100% {
+        border-color: red;
+    }
+}
+
+.details-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.details-content p {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.details-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}

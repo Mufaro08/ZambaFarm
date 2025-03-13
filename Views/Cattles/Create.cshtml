@@ -5,51 +5,122 @@
 }
 
 <div class="container mt-5">
-    <!-- Page Header -->
-    <div class="row justify-content-between align-items-center mb-4">
-        <div class="col-md-8">
-            <h2 class="text-primary">Add New Rabbit</h2>
-            <p class="text-muted">Fill in the details to register a new rabbit</p>
-        </div>
-        <div class="col-md-4 text-md-end">
-            <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-arrow-left-circle me-2"></i>Back to Dashboard</a>
-        </div>
-    </div>
-
-    <!-- Form for Rabbit Data -->
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form asp-action="Create">
-                <div class="mb-3">
-                    <label for="TagNumber" class="form-label">Tag Number</label>
-                    <input type="text" class="form-control" id="TagNumber" name="TagNumber" required />
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Add New Rabbit</h4>
                 </div>
-                <div class="mb-3">
-                    <label for="Gender" class="form-label">Gender</label>
-                    <select class="form-control" id="Gender" name="Gender" required>
-                        <option value="">Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
+                <div class="card-body">
+                    <form asp-action="Create" method="post" id="rabbitForm">
+                        <div class="mb-3">
+                            <label asp-for="TagNumber" class="form-label">Tag Number</label>
+                            <input asp-for="TagNumber" class="form-control" required />
+                            <span asp-validation-for="TagNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Gender" class="form-label">Gender</label>
+                            <select asp-for="Gender" class="form-control" required id="genderSelect">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="BirthDate" class="form-label">Birth Date</label>
+                            <input asp-for="BirthDate" type="date" class="form-control" required />
+                            <span asp-validation-for="BirthDate" class="text-danger"></span>
+                        </div>
+
+                        <div id="femaleOptions">
+                            <div class="mb-3 form-check">
+                                <input asp-for="IsPregnant" class="form-check-input" id="isPregnantCheck" />
+                                <label class="form-check-label" for="isPregnantCheck">Is Pregnant</label>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input asp-for="IsNursing" class="form-check-input" id="isNursingCheck" />
+                                <label class="form-check-label" for="isNursingCheck">Is Nursing</label>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input asp-for="IsMating" class="form-check-input" id="isMatingCheck" />
+                                <label class="form-check-label" for="isMatingCheck">Is Mating</label>
+                            </div>
+
+                            <div class="mb-3" id="matingDateField" style="display: none;">
+                                <label asp-for="MatingDate" class="form-label">Mating Date</label>
+                                <input asp-for="MatingDate" type="date" class="form-control" id="matingDateInput" />
+                                <span asp-validation-for="MatingDate" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Predicted Delivery Date</label>
+                                <input type="text" class="form-control" id="predictedDeliveryDate" disabled />
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label for="BirthDate" class="form-label">Birth Date</label>
-                    <input type="date" class="form-control" id="BirthDate" name="BirthDate" required />
-                </div>
-                <div class="mb-3">
-                    <label for="IsPregnant" class="form-label">Is Pregnant?</label>
-                    <input type="checkbox" class="form-check-input" id="IsPregnant" name="IsPregnant" />
-                </div>
-                <div class="mb-3">
-                    <label for="IsNursing" class="form-label">Is Nursing?</label>
-                    <input type="checkbox" class="form-check-input" id="IsNursing" name="IsNursing" />
-                </div>
-                <div class="mb-3">
-                    <label for="IsMating" class="form-label">Is Mating?</label>
-                    <input type="checkbox" class="form-check-input" id="IsMating" name="IsMating" />
-                </div>
-                <button type="submit" class="btn btn-success w-100">Add Rabbit</button>
-            </form>
+            </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            function toggleFemaleOptions() {
+                let gender = document.getElementById("genderSelect").value;
+                let femaleOptions = document.getElementById("femaleOptions");
+                if (gender === "Female") {
+                    femaleOptions.style.display = "block";
+                } else {
+                    femaleOptions.style.display = "none";
+                    document.getElementById("isPregnantCheck").checked = false;
+                    document.getElementById("isNursingCheck").checked = false;
+                    document.getElementById("isMatingCheck").checked = false;
+                    document.getElementById("matingDateField").style.display = "none";
+                    document.getElementById("matingDateInput").value = "";
+                    document.getElementById("predictedDeliveryDate").value = "";
+                }
+            }
+
+            function toggleMatingDateField() {
+                let isMating = document.getElementById("isMatingCheck").checked;
+                let matingDateField = document.getElementById("matingDateField");
+                matingDateField.style.display = isMating ? "block" : "none";
+                if (!isMating) {
+                    document.getElementById("matingDateInput").value = "";
+                    document.getElementById("predictedDeliveryDate").value = "";
+                }
+            }
+
+            function calculateDeliveryDate() {
+                let matingDateInput = document.getElementById("matingDateInput");
+                let predictedDeliveryDate = document.getElementById("predictedDeliveryDate");
+                if (matingDateInput.value) {
+                    let matingDate = new Date(matingDateInput.value);
+                    let deliveryDate = new Date(matingDate);
+                    deliveryDate.setDate(deliveryDate.getDate() + 30);
+                    predictedDeliveryDate.value = deliveryDate.toISOString().split('T')[0];
+                } else {
+                    predictedDeliveryDate.value = "";
+                }
+            }
+
+            document.getElementById("genderSelect").addEventListener("change", toggleFemaleOptions);
+            document.getElementById("isMatingCheck").addEventListener("change", toggleMatingDateField);
+            document.getElementById("matingDateInput").addEventListener("input", calculateDeliveryDate);
+
+            toggleFemaleOptions();
+            toggleMatingDateField();
+        });
+    </script>
+}

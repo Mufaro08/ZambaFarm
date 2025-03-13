@@ -4,46 +4,62 @@
     ViewData["Title"] = "Rabbit Details";
 }
 
-<div class="container mt-5">
-    <!-- Page Header -->
-    <div class="row justify-content-between align-items-center mb-4">
-        <div class="col-md-8">
+<div class="details-container mt-5 text-white">
+    <div class="animated-border"></div>
+    <div class="details-card " >
+        <div class="card-body">
             <h2 class="text-primary">Rabbit Details</h2>
-            <p class="text-muted">Detailed information about the selected rabbit</p>
-        </div>
-        <div class="col-md-4 text-md-end">
-            <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-arrow-left-circle me-2"></i>Back to Dashboard</a>
-        </div>
-    </div>
-
-    <!-- Rabbit Information -->
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <dl class="row">
-                <dt class="col-sm-4">Tag Number</dt>
-                <dd class="col-sm-8">@Model.TagNumber</dd>
-
-                <dt class="col-sm-4">Gender</dt>
-                <dd class="col-sm-8">@Model.Gender</dd>
-
-                <dt class="col-sm-4">Birth Date</dt>
-                <dd class="col-sm-8">@Model.BirthDate.ToShortDateString()</dd>
-
-                <dt class="col-sm-4">Age</dt>
-                <dd class="col-sm-8">@Model.Age months</dd>
-
-                <dt class="col-sm-4">Status</dt>
-                <dd class="col-sm-8">@Model.Status</dd>
-
-                <dt class="col-sm-4">Pregnancy</dt>
-                <dd class="col-sm-8">@Model.IsPregnant ? "Yes" : "No"</dd>
-
-                <dt class="col-sm-4">Nursing</dt>
-                <dd class="col-sm-8">@Model.IsNursing ? "Yes" : "No"</dd>
-
-                <dt class="col-sm-4">Mating</dt>
-                <dd class="col-sm-8">@Model.IsMating ? "Yes" : "No"</dd>
-            </dl>
+            <hr>
+            <table class="table table-bordered" >
+                <tbody>
+                    <tr class=" text-warning fw-bold" >
+                        
+                        <th> Tag Number</th>
+                        <td>@Model.TagNumber</td>
+                    </tr>
+                    <tr class="text-danger fw-bolder">
+                        <th >Gender</th>
+                        <td>@Model.Gender</td>
+                    </tr>
+                    <tr class=" text-white">
+                        <th >Birth Date</th>
+                        <td>@Model.BirthDate.ToShortDateString()</td>
+                    </tr>
+                    @if (Model.Gender == "Female")
+                    {
+                        <tr class=" text-white">
+                            <th >Is Pregnant</th>
+                            <td>@(Model.IsPregnant ? "Yes" : "No")</td>
+                        </tr>
+                        <tr class=" text-white">
+                            <th >Is Nursing</th>
+                            <td>@(Model.IsNursing ? "Yes" : "No")</td>
+                        </tr>
+                        <tr class="text-white fw-bold">
+                            <th >Mating Date</th>
+                            <td>@(Model.MatingDate?.ToShortDateString() ?? "N/A")</td>
+                        </tr>
+                        <tr>
+                            <th >Predicted Delivery Date</th>
+                            <td>@(Model.DeliveryDate?.ToShortDateString() ?? "N/A")</td>
+                        </tr>
+                    }
+                    <tr class=" text-white ">
+                        <th >Status</th>
+                        <td>@Model.Status</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="mt-3">
+                <a asp-action="Edit" asp-route-id="@Model.RabbitId" class="btn btn-warning">
+                    <i class="bi bi-pencil"></i> Edit
+                </a>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to List
+                </a>
+            </div>
         </div>
     </div>
 </div>
+
+
