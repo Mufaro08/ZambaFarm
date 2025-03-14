@@ -12,7 +12,7 @@ using ZambaFarm.Models;
 namespace ZambaFarm.Migrations
 {
     [DbContext(typeof(FarmContext))]
-    [Migration("20250312215202_2Create")]
+    [Migration("20250314020837_2Create")]
     partial class _2Create
     {
         /// <inheritdoc />
@@ -376,7 +376,14 @@ namespace ZambaFarm.Migrations
                     b.Property<DateTime?>("MatingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("RabbitId1")
+                    b.Property<int>("MotherRabbitId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MotherTagNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NumberOfBabiesNursed")
                         .HasColumnType("int");
 
                     b.Property<string>("TagNumber")
@@ -385,7 +392,7 @@ namespace ZambaFarm.Migrations
 
                     b.HasKey("RabbitId");
 
-                    b.HasIndex("RabbitId1");
+                    b.HasIndex("MotherRabbitId");
 
                     b.ToTable("Rabbits");
                 });
@@ -515,9 +522,13 @@ namespace ZambaFarm.Migrations
 
             modelBuilder.Entity("ZambaFarm.Models.Rabbit", b =>
                 {
-                    b.HasOne("ZambaFarm.Models.Rabbit", null)
+                    b.HasOne("ZambaFarm.Models.Rabbit", "Mother")
                         .WithMany("Offspring")
-                        .HasForeignKey("RabbitId1");
+                        .HasForeignKey("MotherRabbitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Mother");
                 });
 
             modelBuilder.Entity("ZambaFarm.Models.Turkey", b =>

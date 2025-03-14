@@ -22,15 +22,14 @@ namespace ZambaFarm.Models
         {
             base.OnModelCreating(modelBuilder);
 
+            // Customize table name for Turkey
             modelBuilder.Entity<Turkey>()
-       .ToTable("turkeys");
+                .ToTable("turkeys");
 
-            modelBuilder.Entity<Rabbit>()
-                .HasMany(r => r.Offspring);
-               // .WithOne(r => r.Mother)
-               // .HasForeignKey(r => r.MotherId)
-              //  .OnDelete(DeleteBehavior.NoAction);
+            // Remove the self-referencing foreign key for Rabbit
+            // Using MotherRabbitTag instead (no foreign key relationship required)
 
+            // Prevent cascading delete for other entities
             modelBuilder.Entity<Pig>()
                 .HasMany(p => p.Offspring)
                 .WithOne(p => p.Mother)

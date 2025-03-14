@@ -9,48 +9,78 @@
 <h4>Rabbit</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Tag Number -->
             <div class="form-group">
                 <label asp-for="TagNumber" class="control-label"></label>
                 <input asp-for="TagNumber" class="form-control" />
                 <span asp-validation-for="TagNumber" class="text-danger"></span>
             </div>
+
+            <!-- Gender -->
             <div class="form-group">
                 <label asp-for="Gender" class="control-label"></label>
-                <input asp-for="Gender" class="form-control" />
+                <select asp-for="Gender" class="form-control">
+                    <option value="">-- Select Gender --</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
+
+            <!-- Birth Date -->
             <div class="form-group">
                 <label asp-for="BirthDate" class="control-label"></label>
-                <input asp-for="BirthDate" class="form-control" />
+                <input asp-for="BirthDate" type="date" class="form-control" />
                 <span asp-validation-for="BirthDate" class="text-danger"></span>
             </div>
+
+            <!-- Is Pregnant -->
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsPregnant" /> @Html.DisplayNameFor(model => model.IsPregnant)
                 </label>
             </div>
+
+            <!-- Is Nursing -->
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsNursing" /> @Html.DisplayNameFor(model => model.IsNursing)
+                    <input class="form-check-input" asp-for="IsNursing" id="isNursingCheckbox" /> @Html.DisplayNameFor(model => model.IsNursing)
                 </label>
             </div>
+
+            <!-- Number of Babies Being Nursed -->
+            <div class="form-group" id="numberOfBabiesDiv" style="display: none;">
+                <label asp-for="NumberOfBabiesNursed" class="control-label"></label>
+                <input asp-for="NumberOfBabiesNursed" type="number" class="form-control" />
+                <span asp-validation-for="NumberOfBabiesNursed" class="text-danger"></span>
+            </div>
+
+            <!-- Is Mating -->
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsMating" /> @Html.DisplayNameFor(model => model.IsMating)
                 </label>
             </div>
+
+            <!-- Mating Date -->
             <div class="form-group">
                 <label asp-for="MatingDate" class="control-label"></label>
-                <input asp-for="MatingDate" class="form-control" />
+                <input asp-for="MatingDate" type="date" class="form-control" />
                 <span asp-validation-for="MatingDate" class="text-danger"></span>
             </div>
-          <!--  <div class="form-group">
-                <label asp-for="MotherId" class="control-label"></label>
-                <select asp-for="MotherId" class ="form-control" asp-items="ViewBag.MotherId"></select>
-              </div> -->
+
+            <!-- Mother Tag Number -->
+            <div class="form-group">
+                <label asp-for="MotherTagNumber" class="control-label"></label>
+                <input asp-for="MotherTagNumber" class="form-control" placeholder="Enter Mother's Tag Number" />
+                <span asp-validation-for="MotherTagNumber" class="text-danger"></span>
+            </div>
+
+            <!-- Submit Button -->
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -62,3 +92,16 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts {
+    <script>
+        // Show or hide the 'Number of Babies Being Nursed' field based on the 'Is Nursing' checkbox
+        document.getElementById("isNursingCheckbox").addEventListener("change", function () {
+            const numberOfBabiesDiv = document.getElementById("numberOfBabiesDiv");
+            if (this.checked) {
+                numberOfBabiesDiv.style.display = "block";
+            } else {
+                numberOfBabiesDiv.style.display = "none";
+            }
+        });
+    </script>
+}

@@ -1,59 +1,107 @@
 ﻿@model ZambaFarm.Models.Rabbit
 
 @{
-    ViewData["Title"] = "Edit Rabbit Details";
-    var genderOptions = new List<SelectListItem>
-    {
-        new SelectListItem { Value = "Male", Text = "Male" },
-        new SelectListItem { Value = "Female", Text = "Female" }
-    };
+    ViewData["Title"] = "Create";
 }
 
-<div class="container mt-5">
-    <!-- Page Header -->
-    <div class="row justify-content-between align-items-center mb-4">
-        <div class="col-md-8">
-            <h2 class="text-primary">Edit Rabbit Details</h2>
-            <p class="text-muted">Update the details of the selected rabbit</p>
-        </div>
-        <div class="col-md-4 text-md-end">
-            <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-arrow-left-circle me-2"></i>Back to Dashboard</a>
-        </div>
-    </div>
+<h1>Create</h1>
 
-    <!-- Form for Rabbit Data -->
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <form asp-action="Edit">
-                <input type="hidden" asp-for="RabbitId" />
+<h4>Rabbit</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="mb-3">
-                    <label for="TagNumber" class="form-label">Tag Number</label>
-                    <input type="text" class="form-control" asp-for="TagNumber" required />
-                </div>
-                <div class="mb-3">
-                    <label for="Gender" class="form-label">Gender</label>
-                    <select class="form-control" asp-for="Gender" asp-items="genderOptions" required>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="BirthDate" class="form-label">Birth Date</label>
-                    <input type="date" class="form-control" asp-for="BirthDate" required />
-                </div>
-                <div class="mb-3">
-                    <label for="IsPregnant" class="form-label">Is Pregnant?</label>
-                    <input type="checkbox" class="form-check-input" asp-for="IsPregnant" />
-                </div>
-                <div class="mb-3">
-                    <label for="IsNursing" class="form-label">Is Nursing?</label>
-                    <input type="checkbox" class="form-check-input" asp-for="IsNursing" />
-                </div>
-                <div class="mb-3">
-                    <label for="IsMating" class="form-label">Is Mating?</label>
-                    <input type="checkbox" class="form-check-input" asp-for="IsMating" />
-                </div>
-                <button type="submit" class="btn btn-warning w-100">Update Rabbit</button>
-            </form>
-        </div>
+            <!-- Tag Number -->
+            <div class="form-group">
+                <label asp-for="TagNumber" class="control-label"></label>
+                <input asp-for="TagNumber" class="form-control" />
+                <span asp-validation-for="TagNumber" class="text-danger"></span>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+                <select asp-for="Gender" class="form-control">
+                    <option value="">-- Select Gender --</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+
+            <!-- Birth Date -->
+            <div class="form-group">
+                <label asp-for="BirthDate" class="control-label"></label>
+                <input asp-for="BirthDate" type="date" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+
+            <!-- Is Pregnant -->
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsPregnant" /> @Html.DisplayNameFor(model => model.IsPregnant)
+                </label>
+            </div>
+
+            <!-- Is Nursing -->
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsNursing" id="isNursingCheckbox" /> @Html.DisplayNameFor(model => model.IsNursing)
+                </label>
+            </div>
+
+            <!-- Number of Babies Being Nursed -->
+            <div class="form-group" id="numberOfBabiesDiv" style="display: none;">
+                <label asp-for="NumberOfBabiesNursed" class="control-label"></label>
+                <input asp-for="NumberOfBabiesNursed" type="number" class="form-control" />
+                <span asp-validation-for="NumberOfBabiesNursed" class="text-danger"></span>
+            </div>
+
+            <!-- Is Mating -->
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsMating" /> @Html.DisplayNameFor(model => model.IsMating)
+                </label>
+            </div>
+
+            <!-- Mating Date -->
+            <div class="form-group">
+                <label asp-for="MatingDate" class="control-label"></label>
+                <input asp-for="MatingDate" type="date" class="form-control" />
+                <span asp-validation-for="MatingDate" class="text-danger"></span>
+            </div>
+
+            <!-- Mother Tag Number -->
+            <div class="form-group">
+                <label asp-for="MotherTagNumber" class="control-label"></label>
+                <input asp-for="MotherTagNumber" class="form-control" placeholder="Enter Mother's Tag Number" />
+                <span asp-validation-for="MotherTagNumber" class="text-danger"></span>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
 </div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        // Show or hide the 'Number of Babies Being Nursed' field based on the 'Is Nursing' checkbox
+        document.getElementById("isNursingCheckbox").addEventListener("change", function () {
+            const numberOfBabiesDiv = document.getElementById("numberOfBabiesDiv");
+            if (this.checked) {
+                numberOfBabiesDiv.style.display = "block";
+            } else {
+                numberOfBabiesDiv.style.display = "none";
+            }
+        });
+    </script>
+}
