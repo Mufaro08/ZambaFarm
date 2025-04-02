@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using ZambaFarm.Models;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace ZambaFarm.Controllers
 {
@@ -20,15 +20,8 @@ namespace ZambaFarm.Controllers
         // GET: Rabbits
         public async Task<IActionResult> Index()
         {
-            try
-            {
-                var farmContext = await _context.Rabbits.ToListAsync();
-                return View(farmContext);
-            }
-            catch (Exception ex)
-            {
-                return RedirectToAction("Error", new { message = $"Error loading rabbits: {ex.Message}" });
-            }
+            var farmContext = await _context.Rabbits.ToListAsync();
+            return View(farmContext);
         }
 
         // GET: Rabbits/Create
@@ -40,31 +33,74 @@ namespace ZambaFarm.Controllers
         // POST: Rabbits/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RabbitId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherRabbitTag")] Rabbit rabbit)
+        public async Task<IActionResult> Create([Bind("RabbitId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherRabbitId,MotherTagNumber")] Rabbit rabbit)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    rabbit.AddNursedBabies();
-                    foreach (var baby in rabbit.Offspring)
-                    {
-                        baby.MotherTagNumber = rabbit.TagNumber;
-                    }
-
-                    _context.Add(rabbit);
-                    await _context.SaveChangesAsync();
-                    TempData["SuccessMessage"] = "Rabbit added successfully!";
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (Exception ex)
-                {
-                    return RedirectToAction("Error", new { message = $"Error adding rabbit: {ex.Message}" });
-                }
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                TempData["ErrorMessage"] = "Validation failed: " + string.Join(", ", errors);
+                return View(rabbit);
             }
 
-            return View(rabbit);
+            try
+            {
+                
+
+                // Add the main rabbit (mother)
+                _context.Rabbits.Add(rabbit);
+                await _context.SaveChangesAsync(); // Save rabbit first to get ID
+
+                // Generate offspring if nursing
+                rabbit.AddNursedBabies();
+
+                // Explicitly add offspring to the database
+                if (rabbit.Offspring.Any())
+                {
+                    foreach (var baby in rabbit.Offspring)
+                    {
+                        baby.MotherRabbitId = rabbit.RabbitId; // Set mother's ID
+                        _context.Rabbits.Add(baby); // Add each baby to the database
+                    }
+                    await _context.SaveChangesAsync(); // Save all offspring
+                }
+
+                TempData["SuccessMessage"] = "Rabbit added successfully!";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error adding rabbit: {ex.Message}";
+                return View(rabbit);
+            }
         }
+
+        // GET: Rabbits/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Error", new { message = "Rabbit ID not specified." });
+            }
+
+            try
+            {
+                var rabbit = await _context.Rabbits
+                    .Include(r => r.Offspring) // If you need to include offspring
+                    .FirstOrDefaultAsync(r => r.RabbitId == id);
+
+                if (rabbit == null)
+                {
+                    return RedirectToAction("Error", new { message = "Rabbit not found." });
+                }
+
+                return View(rabbit);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", new { message = $"Error loading rabbit details: {ex.Message}" });
+            }
+        }
+
 
         // GET: Rabbits/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -89,39 +125,53 @@ namespace ZambaFarm.Controllers
             }
         }
 
-        // GET: Rabbits/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // POST: Rabbits/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("RabbitId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherRabbitId,MotherTagNumber, Offspring")] Rabbit rabbit)
         {
-            if (id == null)
+            if (id != rabbit.RabbitId)
             {
-                return RedirectToAction("Error", new { message = "Rabbit ID not specified." });
+                return RedirectToAction("Error", new { message = "Rabbit ID mismatch." });
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                TempData["ErrorMessage"] = "Validation failed: " + string.Join(", ", errors);
+                return View(rabbit);
             }
 
             try
             {
-                var rabbit = await _context.Rabbits
-                    .Include(r => r.Offspring)
-                    .FirstOrDefaultAsync(r => r.RabbitId == id);
-
-                if (rabbit == null)
+                // Check if the rabbit is nursing and generate offspring
+                if (rabbit.IsNursing)
                 {
-                    return RedirectToAction("Error", new { message = "Rabbit not found." });
+                    rabbit.AddNursedBabies();
                 }
 
-                if (!string.IsNullOrEmpty(rabbit.MotherTagNumber))
+                // Update the main rabbit
+                _context.Update(rabbit);
+                await _context.SaveChangesAsync(); // Save the updated rabbit
+
+                // Update offspring (if any)
+                if (rabbit.Offspring.Any())
                 {
-                    var mother = await _context.Rabbits.FirstOrDefaultAsync(r => r.TagNumber == rabbit.MotherTagNumber);
-                    if (mother != null)
+                    foreach (var baby in rabbit.Offspring)
                     {
-                        ViewData["MotherDetails"] = mother;
+                        baby.MotherRabbitId = rabbit.RabbitId; // Ensure the offspring is linked to the mother
+                        _context.Update(baby); // Update each baby
                     }
+                    await _context.SaveChangesAsync(); // Save all changes to the offspring
                 }
 
-                return View(rabbit);
+                TempData["SuccessMessage"] = "Rabbit updated successfully!";
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", new { message = $"Error loading rabbit details: {ex.Message}" });
+                TempData["ErrorMessage"] = $"Error updating rabbit: {ex.Message}";
+                return View(rabbit);
             }
         }
 

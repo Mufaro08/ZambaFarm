@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations;
 
 namespace ZambaFarm.Models
 { 
@@ -26,6 +27,9 @@ public class Rabbit
     public bool IsMating { get; set; }
     public DateTime? MatingDate { get; set; }
 
+    public int? MotherRabbitId { get; set; }
+    public string? MotherTagNumber { get; set; }
+
     public DateTime? DeliveryDate => IsPregnant && MatingDate.HasValue
         ? MatingDate.Value.AddDays(30)
         : (DateTime?)null;
@@ -37,9 +41,12 @@ public class Rabbit
     public virtual ICollection<Rabbit> Offspring { get; set; } = new List<Rabbit>();
 
     // New Properties
-    public string MotherTagNumber { get; set; } // Tag of the mother
-    public virtual Rabbit Mother { get; set; } // Navigation property to the mother
+   // public string MotherTagNumber { get; set; } // Tag of the mother
+    //public virtual Rabbit Mother { get; set; } // Navigation property to the mother
        
+        [BindNever] // ✅ Prevent validation on this navigation property
+        public virtual Rabbit? Mother { get; set; } // Navigation property
+
 
         public void AddNursedBabies()
     {
@@ -58,5 +65,6 @@ public class Rabbit
             }
         }
     }
-}
+       
+    }
 }

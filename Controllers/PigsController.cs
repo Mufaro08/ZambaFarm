@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ZambaFarm.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace ZambaFarm.Controllers
 {
@@ -21,123 +20,183 @@ namespace ZambaFarm.Controllers
         // GET: Pigs
         public async Task<IActionResult> Index()
         {
-            var farmContext = _context.Pigs.Include(p => p.Mother);
-            return View(await farmContext.ToListAsync());
-        }
-
-        // GET: Pigs/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Pigs == null)
-            {
-                return NotFound();
-            }
-
-            var pig = await _context.Pigs
-                .Include(p => p.Mother)
-                .FirstOrDefaultAsync(m => m.PigId == id);
-            if (pig == null)
-            {
-                return NotFound();
-            }
-
-            return View(pig);
+            var farmContext = await _context.Pigs.ToListAsync();
+            return View(farmContext);
         }
 
         // GET: Pigs/Create
         public IActionResult Create()
         {
-            ViewData["MotherId"] = new SelectList(_context.Pigs, "PigId", "PigId");
             return View();
         }
 
         // POST: Pigs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PigId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,MotherId")] Pig pig)
+        public async Task<IActionResult> Create([Bind("PigId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherPigId,MotherTagNumber")] Pig pig)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(pig);
-                await _context.SaveChangesAsync();
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                TempData["ErrorMessage"] = "Validation failed: " + string.Join(", ", errors);
+                return View(pig);
+            }
+
+            try
+            {
+               
+
+                // Add the main pig (mother)
+                _context.Pigs.Add(pig);
+                await _context.SaveChangesAsync(); // Save pig first to get ID
+
+                // Generate offspring if nursing
+                pig.AddPiglets();
+
+                // Explicitly add offspring to the database
+                if (pig.Offspring.Any())
+                {
+                    foreach (var baby in pig.Offspring)
+                    {
+                        baby.MotherPigId = pig.PigId; // Set mother's ID
+                        _context.Pigs.Add(baby); // Add each baby to the database
+                    }
+                    await _context.SaveChangesAsync(); // Save all offspring
+                }
+
+                TempData["SuccessMessage"] = "Pig added successfully!";
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MotherId"] = new SelectList(_context.Pigs, "PigId", "PigId", pig.MotherId);
-            return View(pig);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error adding Pig: {ex.Message}";
+                return View(pig);
+            }
         }
 
-        // GET: Pigs/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: Pigs/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Pigs == null)
+            if (id == null)
             {
-                return NotFound();
+                return RedirectToAction("Error", new { message = "Pig ID not specified." });
             }
 
-            var pig = await _context.Pigs.FindAsync(id);
-            if (pig == null)
+            try
             {
-                return NotFound();
+                var pig = await _context.Pigs
+                    .Include(r => r.Offspring) // If you need to include offspring
+                    .FirstOrDefaultAsync(r => r.PigId == id);
+
+                if (pig == null)
+                {
+                    return RedirectToAction("Error", new { message = "Pig not found." });
+                }
+
+                return View(pig);
             }
-            ViewData["MotherId"] = new SelectList(_context.Pigs, "PigId", "PigId", pig.MotherId);
-            return View(pig);
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", new { message = $"Error loading pig details: {ex.Message}" });
+            }
+        }
+
+
+        // GET: pigs/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Error", new { message = "Pig ID not specified." });
+            }
+
+            try
+            {
+                var pig = await _context.Pigs.FindAsync(id);
+                if (pig == null)
+                {
+                    return RedirectToAction("Error", new { message = "Pig not found." });
+                }
+                return View(pig);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", new { message = $"Error loading pig for edit: {ex.Message}" });
+            }
         }
 
         // POST: Pigs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PigId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,MotherId")] Pig pig)
+        public async Task<IActionResult> Edit(int id, [Bind("PigId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherPigId,MotherTagNumber, Offspring")] Pig pig )
         {
             if (id != pig.PigId)
             {
-                return NotFound();
+                return RedirectToAction("Error", new { message = "Pig ID mismatch." });
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                TempData["ErrorMessage"] = "Validation failed: " + string.Join(", ", errors);
+                return View(pig);
+            }
+
+            try
+            {
+                // Check if the pig is nursing and generate offspring
+                if (pig.IsNursing)
                 {
-                    _context.Update(pig);
-                    await _context.SaveChangesAsync();
+                    pig.AddPiglets();
                 }
-                catch (DbUpdateConcurrencyException)
+
+                // Update the main pig
+                _context.Update(pig);
+                await _context.SaveChangesAsync(); // Save the updated pig
+
+                // Update offspring (if any)
+                if (pig.Offspring.Any())
                 {
-                    if (!PigExists(pig.PigId))
+                    foreach (var baby in pig.Offspring)
                     {
-                        return NotFound();
+                        baby.MotherPigId = pig.PigId; // Ensure the offspring is linked to the mother
+                        _context.Update(baby); // Update each baby
                     }
-                    else
-                    {
-                        throw;
-                    }
+                    await _context.SaveChangesAsync(); // Save all changes to the offspring
                 }
+
+                TempData["SuccessMessage"] = "Pig updated successfully!";
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MotherId"] = new SelectList(_context.Pigs, "PigId", "PigId", pig.MotherId);
-            return View(pig);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error updating pig: {ex.Message}";
+                return View(pig);
+            }
         }
 
         // GET: Pigs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Pigs == null)
+            if (id == null)
             {
-                return NotFound();
+                return RedirectToAction("Error", new { message = "Pig ID not specified." });
             }
 
-            var pig = await _context.Pigs
-                .Include(p => p.Mother)
-                .FirstOrDefaultAsync(m => m.PigId == id);
-            if (pig == null)
+            try
             {
-                return NotFound();
-            }
+                var pig = await _context.Pigs.FirstOrDefaultAsync(m => m.PigId == id);
+                if (pig == null)
+                {
+                    return RedirectToAction("Error", new { message = "Pig not found." });
+                }
 
-            return View(pig);
+                return View(pig);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", new { message = $"Error loading pig for delete: {ex.Message}" });
+            }
         }
 
         // POST: Pigs/Delete/5
@@ -145,23 +204,40 @@ namespace ZambaFarm.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Pigs == null)
+            try
             {
-                return Problem("Entity set 'FarmContext.Pigs'  is null.");
-            }
-            var pig = await _context.Pigs.FindAsync(id);
-            if (pig != null)
-            {
+                var pig = await _context.Pigs.FindAsync(id);
+                if (pig == null)
+                {
+                    return RedirectToAction("Error", new { message = "Pig not found." });
+                }
+
                 _context.Pigs.Remove(pig);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Pig deleted successfully!";
             }
-            
-            await _context.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", new { message = $"Error deleting pig: {ex.Message}" });
+            }
             return RedirectToAction(nameof(Index));
         }
 
         private bool PigExists(int id)
         {
-          return (_context.Pigs?.Any(e => e.PigId == id)).GetValueOrDefault();
+            return _context.Pigs.Any(e => e.PigId == id);
+        }
+
+        // Custom Error Action to Handle Errors and Pass ErrorViewModel
+        public IActionResult Error(string message)
+        {
+            var model = new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+                Message = message
+            };
+
+            return View("Error", model);
         }
     }
 }

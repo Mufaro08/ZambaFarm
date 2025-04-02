@@ -1,66 +1,144 @@
 ﻿@model ZambaFarm.Models.Goat
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Goat Details";
+
+// Calculate Age
+    int years = DateTime.Now.Year - Model.BirthDate.Year;
+    int months = DateTime.Now.Month - Model.BirthDate.Month;
+
+    if (months < 0)
+    {
+        years--;
+        months += 12;
+    }
+
+    string ageText = years > 0 ? $"{years} years {months} months" : $"{months} months";
 }
 
-<h1>Details</h1>
+<div class="details-container mt-5 text-white">
+    <div class="animated-border"></div>
+    <div class="details-card">
+        <div class="card-body" >
+            <h2 class="text-primary">Goat Details</h2>
+            <p class="text-muted">View detailed information about the goat.</p>
+            <hr />
+            <table class="table table-bordered">
+                <tbody>
+                    <!-- Display Tag Number -->
+                    <tr class="text-white fw-bold">
+                        <th>Tag Number</th>
+                        <td>@Model.TagNumber</td>
+                    </tr>
 
-<div>
-    <h4>Goat</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TagNumber)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TagNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BirthDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BirthDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsPregnant)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsPregnant)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsNursing)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsNursing)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsMating)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsMating)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MatingDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MatingDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Mother)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Mother.GoatId)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.GoatId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+                    <!-- Display Gender -->
+                    <tr class="text-white fw-bolder">
+                        <th>Gender</th>
+                        <td>@Model.Gender</td>
+                    </tr>
+                    
+                    <!-- Display Age -->
+                    
+                    <tr class="text-white">
+                        <th>Age</th>
+                        <td>@ageText</td>
+                    </tr> 
+
+                    <!-- Female-specific Details -->
+                    @if (Model.Gender == "Female")
+                    {
+                        <tr class="text-white">
+                            <th>Is Pregnant</th>
+                            <td>@(Model.IsPregnant ? "Yes" : "No")</td>
+                        </tr>
+                        <tr class="text-white">
+                            <th>Is Nursing</th>
+                            <td>@(Model.IsNursing ? "Yes" : "No")</td>
+                        </tr> 
+                        <tr class="text-white">
+                            <th>Mating Date</th>
+                            <td>@(Model.MatingDate?.ToShortDateString() ?? "N/A")</td>
+                        </tr>
+                        <tr class="text-white">
+                            <th>Predicted Delivery Date</th>
+                            <td>@(Model.DeliveryDate?.ToShortDateString() ?? "N/A")</td>
+                        </tr>
+                    }
+
+                    <!-- Display Status -->
+                    <tr class="text-white">
+                        <th>Status</th>
+                        <td>@Model.Status</td>
+                    </tr>
+
+                    <!-- Mother Information -->
+                    <tr class="text-white">
+                        <th>Mother</th>
+                        <td>
+                            @if (!string.IsNullOrEmpty(Model.MotherTagNumber))
+                            {
+                                var mother = ViewData["MotherDetails"] as ZambaFarm.Models.Goat;
+                                if (mother != null)
+                                {
+                                    <a asp-action="Details" asp-route-id="@mother.GoatId">
+                                        @Model.MotherTagNumber
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span>Mother not found.</span>
+                                }
+                            }
+                            else
+                            {
+                                <span>N/A</span>
+                            }
+                        </td>
+                    </tr>
+
+                    <!-- Offspring Information -->
+                    <tr class="text-white">
+                        <th>Offspring</th>
+                        <td>
+                            @if (Model.Offspring.Any())
+                            {
+                                <ul>
+                                    @foreach (var baby in Model.Offspring)
+                                    {
+                                        // Calculate age for offspring
+                                        int babyYears = DateTime.Now.Year - baby.BirthDate.Year;
+                                        int babyMonths = DateTime.Now.Month - baby.BirthDate.Month;
+                                        if (babyMonths < 0)
+                                        {
+                                            babyYears--;
+                                            babyMonths += 12;
+                                        }
+
+                                        string babyAge = babyYears > 0 ? $"{babyYears} years {babyMonths} months" : $"{babyMonths} months";
+
+                                        <li>
+                                            <a asp-action="Details" asp-route-id="@baby.GoatId">
+                                                Tag: @baby.TagNumber, Age: @babyAge
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <span>No offspring yet.</span>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            
+            <div class="mb-3 text-md-end">
+                <a asp-action="Edit" asp-route-id="@Model.GoatId" class="btn btn-warning">Edit</a>
+                <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
+            </div>
+        </div>
+    </div>
+   
 </div>

@@ -1,66 +1,86 @@
-﻿@model ZambaFarm.Models.Rabbit
+﻿@model ZambaFarm.Models.Cattle
 
 @{
-    ViewData["Title"] = "Add New Rabbit";
+    ViewData["Title"] = "Add New Cattle";
 }
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card shadow-lg">
+            <div class="card ">
                 <div class="card-header bg-primary text-white text-center">
-                    <h4>Add New Rabbit</h4>
+                    <h4>Add New Cattle</h4>
                 </div>
                 <div class="card-body">
-                    <form asp-action="Create" method="post" id="rabbitForm">
-                        <div class="mb-3">
-                            <label asp-for="TagNumber" class="form-label">Tag Number</label>
-                            <input asp-for="TagNumber" class="form-control" required />
+                    <form asp-action="Create" method="post" id="cattleForm">
+                        
+                        <!-- Tag Number -->
+                        <div class="form-group">
+                            <label asp-for="TagNumber" class="control-label"></label>
+                            <input asp-for="TagNumber" class="form-control" />
                             <span asp-validation-for="TagNumber" class="text-danger"></span>
                         </div>
 
-                        <div class="mb-3">
-                            <label asp-for="Gender" class="form-label">Gender</label>
-                            <select asp-for="Gender" class="form-control" required id="genderSelect">
+                        <!-- Gender -->
+                        <div class="form-group">
+                            <label asp-for="Gender" class="control-label"></label>
+                            <select asp-for="Gender" class="form-control">
+                                <option value="">-- Select Gender --</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                             </select>
                             <span asp-validation-for="Gender" class="text-danger"></span>
                         </div>
 
-                        <div class="mb-3">
-                            <label asp-for="BirthDate" class="form-label">Birth Date</label>
-                            <input asp-for="BirthDate" type="date" class="form-control" required />
+                        <!-- Birth Date -->
+                        <div class="form-group">
+                            <label asp-for="BirthDate" class="control-label"></label>
+                            <input asp-for="BirthDate" type="date" class="form-control" />
                             <span asp-validation-for="BirthDate" class="text-danger"></span>
                         </div>
 
-                        <div id="femaleOptions">
-                            <div class="mb-3 form-check">
-                                <input asp-for="IsPregnant" class="form-check-input" id="isPregnantCheck" />
-                                <label class="form-check-label" for="isPregnantCheck">Is Pregnant</label>
-                            </div>
-
-                            <div class="mb-3 form-check">
-                                <input asp-for="IsNursing" class="form-check-input" id="isNursingCheck" />
-                                <label class="form-check-label" for="isNursingCheck">Is Nursing</label>
-                            </div>
-
-                            <div class="mb-3 form-check">
-                                <input asp-for="IsMating" class="form-check-input" id="isMatingCheck" />
-                                <label class="form-check-label" for="isMatingCheck">Is Mating</label>
-                            </div>
-
-                            <div class="mb-3" id="matingDateField" style="display: none;">
-                                <label asp-for="MatingDate" class="form-label">Mating Date</label>
-                                <input asp-for="MatingDate" type="date" class="form-control" id="matingDateInput" />
-                                <span asp-validation-for="MatingDate" class="text-danger"></span>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Predicted Delivery Date</label>
-                                <input type="text" class="form-control" id="predictedDeliveryDate" disabled />
-                            </div>
+                        <!-- Is Pregnant -->
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="IsPregnant" /> @Html.DisplayNameFor(model => model.IsPregnant)
+                            </label>
                         </div>
+
+                        <!-- Is Nursing -->
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="IsNursing" id="isNursingCheckbox" /> @Html.DisplayNameFor(model => model.IsNursing)
+                            </label>
+                        </div>
+
+                        <!-- Number of Babies Being Nursed -->
+                        <div class="form-group" id="numberOfBabiesDiv" style="display: none;">
+                            <label asp-for="NumberOfBabiesNursed" class="control-label"></label>
+                            <input asp-for="NumberOfBabiesNursed" type="number" class="form-control" />
+                            <span asp-validation-for="NumberOfBabiesNursed" class="text-danger"></span>
+                        </div>
+
+                        <!-- Is Mating -->
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="IsMating" /> @Html.DisplayNameFor(model => model.IsMating)
+                            </label>
+                        </div>
+
+                        <!-- Mating Date -->
+                        <div class="form-group">
+                            <label asp-for="MatingDate" class="control-label"></label>
+                            <input asp-for="MatingDate" type="date" class="form-control" />
+                            <span asp-validation-for="MatingDate" class="text-danger"></span>
+                        </div>
+
+                        <!-- Mother Tag Number -->
+                        <div class="form-group">
+                            <label asp-for="MotherTagNumber" class="control-label"></label>
+                            <input asp-for="MotherTagNumber" class="form-control" placeholder="Enter Mother's Tag Number" />
+                            <span asp-validation-for="MotherTagNumber" class="text-danger"></span>
+                        </div>
+                
 
                         <div class="text-center">
                             <button type="submit" class="btn btn-success">Save</button>

@@ -1,5 +1,6 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    margin-bottom: 60px;
 }
 
 @media (min-width: 768px) {
@@ -8,88 +9,18 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus,  .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #39FF14;
 }
+
 
 html {
   position: relative;
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
-}
 
-/* Background Styling 
-body {
-    background-color: #000;
-    color: #fff;
-}
 
-/* Card Styling
-.details-card {
-    background: #222;
-    color: white;
-    padding: 20px;
-    border-radius: 12px;
-    position: relative;
-    overflow: hidden;
-    width: 50%;
-    margin: auto;
-}
-
-    /* Animated Border Effect 
-    .details-card::before {
-        content: "";
-        position: absolute;
-        top: -2px;
-        left: -2px;
-        right: -2px;
-        bottom: -2px;
-        background: linear-gradient(45deg, #007bff, #dc3545, #007bff);
-        background-size: 200% 200%;
-        border-radius: 15px;
-        z-index: -1;
-        animation: borderMove 4s linear infinite;
-    }
-
-@keyframes borderMove {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-/* Table Styling 
-.details-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-    .details-table th, .details-table td {
-        padding: 12px;
-        border-bottom: 2px solid #007bff; /* Primary color 
-        text-align: left;
-    }
-    /*
-    .details-table tr:nth-child(even) {
-        background-color: #333;
-    }
-
-/* Button Styling 
-.btn-container {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-}
 
 */
 /* Stylish card design for animal details */
@@ -122,11 +53,11 @@ body {
     }
 
     66% {
-        border-color: green;
+        border-color: #39FF14;
     }
 
     100% {
-        border-color: red;
+        border-color: #39FF14;
     }
 }
 
@@ -145,4 +76,28 @@ body {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+}
+.values {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, auto));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+    .values .values-box {
+        padding: 10px;
+        border-radius: 2rem;
+        box-shadow: 1px 4px 10px #39FF14;
+    }
+
+        .values .values-box p {
+            padding: 0 10px;
+            border: 1px solid greenyellow;
+            width: fit-content;
+            border-radius: 0.5rem;
+            margin: 1rem 0 1rem;
+        }
+
+.card {
+    box-shadow: 1px 4px 10px #39FF14;
 }

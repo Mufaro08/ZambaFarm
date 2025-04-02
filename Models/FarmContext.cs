@@ -26,36 +26,30 @@ namespace ZambaFarm.Models
             modelBuilder.Entity<Turkey>()
                 .ToTable("turkeys");
 
-            // Remove the self-referencing foreign key for Rabbit
-            // Using MotherRabbitTag instead (no foreign key relationship required)
+            // Configure MotherTagNumber for Rabbit without foreign key relation
+            modelBuilder.Entity<Rabbit>()
+                .Property(r => r.MotherTagNumber)
+                .HasColumnName("MotherTagNumber");
 
-            // Prevent cascading delete for other entities
+            // Prevent cascading deletes for other entities
             modelBuilder.Entity<Pig>()
-                .HasMany(p => p.Offspring)
-                .WithOne(p => p.Mother)
-                .HasForeignKey(p => p.MotherId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .Property(p => p.MotherTagNumber)
+                .HasColumnName("MotherTagNumber");
 
             modelBuilder.Entity<Cattle>()
-                .HasMany(c => c.Offspring)
-                .WithOne(c => c.Mother)
-                .HasForeignKey(c => c.MotherId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .Property(c => c.MotherTagNumber)
+                .HasColumnName("MotherTagNumber");
 
             modelBuilder.Entity<Goat>()
-                .HasMany(g => g.Offspring)
-                .WithOne(g => g.Mother)
-                .HasForeignKey(g => g.MotherId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .Property(g => g.MotherTagNumber)
+                .HasColumnName("MotherTagNumber");
 
             modelBuilder.Entity<Turkey>()
-                .HasMany(t => t.Offspring)
-                .WithOne(t => t.Mother)
-                .HasForeignKey(t => t.MotherId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .Property(t => t.MotherTagNumber)
+                .HasColumnName("MotherTagNumber");
         }
 
-        // Add a new entry
+        // Add a new entity
         public async Task AddEntityAsync<T>(T entity) where T : class
         {
             try
@@ -69,7 +63,7 @@ namespace ZambaFarm.Models
             }
         }
 
-        // Update an existing entry
+        // Update an entity
         public async Task UpdateEntityAsync<T>(T entity) where T : class
         {
             try
@@ -83,7 +77,7 @@ namespace ZambaFarm.Models
             }
         }
 
-        // Delete an entry
+        // Delete an entity
         public async Task DeleteEntityAsync<T>(T entity) where T : class
         {
             try

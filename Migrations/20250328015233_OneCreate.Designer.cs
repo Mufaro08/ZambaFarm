@@ -12,8 +12,8 @@ using ZambaFarm.Models;
 namespace ZambaFarm.Migrations
 {
     [DbContext(typeof(FarmContext))]
-    [Migration("20250314013249_1Create")]
-    partial class _1Create
+    [Migration("20250328015233_OneCreate")]
+    partial class OneCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -250,8 +250,14 @@ namespace ZambaFarm.Migrations
                     b.Property<DateTime?>("MatingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("MotherId")
-                        .IsRequired()
+                    b.Property<int?>("MotherCattleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MotherTagNumber")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("MotherTagNumber");
+
+                    b.Property<int?>("NumberOfCalves")
                         .HasColumnType("int");
 
                     b.Property<string>("TagNumber")
@@ -260,7 +266,7 @@ namespace ZambaFarm.Migrations
 
                     b.HasKey("CattleId");
 
-                    b.HasIndex("MotherId");
+                    b.HasIndex("MotherCattleId");
 
                     b.ToTable("Cattles");
                 });
@@ -283,17 +289,20 @@ namespace ZambaFarm.Migrations
                     b.Property<bool>("IsMating")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsNursing")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsPregnant")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("MatingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("MotherId")
-                        .IsRequired()
+                    b.Property<int?>("MotherGoatId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MotherTagNumber")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("MotherTagNumber");
+
+                    b.Property<int?>("NumberOfKids")
                         .HasColumnType("int");
 
                     b.Property<string>("TagNumber")
@@ -302,7 +311,7 @@ namespace ZambaFarm.Migrations
 
                     b.HasKey("GoatId");
 
-                    b.HasIndex("MotherId");
+                    b.HasIndex("MotherGoatId");
 
                     b.ToTable("Goats");
                 });
@@ -325,17 +334,20 @@ namespace ZambaFarm.Migrations
                     b.Property<bool>("IsMating")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsNursing")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsPregnant")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("MatingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("MotherId")
-                        .IsRequired()
+                    b.Property<int?>("MotherPigId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MotherTagNumber")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("MotherTagNumber");
+
+                    b.Property<int?>("NumberOfPiglets")
                         .HasColumnType("int");
 
                     b.Property<string>("TagNumber")
@@ -344,7 +356,7 @@ namespace ZambaFarm.Migrations
 
                     b.HasKey("PigId");
 
-                    b.HasIndex("MotherId");
+                    b.HasIndex("MotherPigId");
 
                     b.ToTable("Pigs");
                 });
@@ -376,12 +388,12 @@ namespace ZambaFarm.Migrations
                     b.Property<DateTime?>("MatingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MotherRabbitId")
+                    b.Property<int?>("MotherRabbitId")
                         .HasColumnType("int");
 
                     b.Property<string>("MotherTagNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("MotherTagNumber");
 
                     b.Property<int?>("NumberOfBabiesNursed")
                         .HasColumnType("int");
@@ -408,30 +420,39 @@ namespace ZambaFarm.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("BreedingDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsBreeding")
+                    b.Property<bool>("IsEggLaying")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("MotherId")
-                        .IsRequired()
+                    b.Property<bool>("IsMated")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("MatingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MotherTagNumber")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("MotherTagNumber");
+
+                    b.Property<int?>("MotherTurkeyId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NumberOfEggs")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NumberOfEggsLaid")
                         .HasColumnType("int");
 
                     b.Property<string>("TagNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Weight")
-                        .HasColumnType("float");
-
                     b.HasKey("TurkeyId");
 
-                    b.HasIndex("MotherId");
+                    b.HasIndex("MotherTurkeyId");
 
                     b.ToTable("turkeys", (string)null);
                 });
@@ -491,9 +512,7 @@ namespace ZambaFarm.Migrations
                 {
                     b.HasOne("ZambaFarm.Models.Cattle", "Mother")
                         .WithMany("Offspring")
-                        .HasForeignKey("MotherId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("MotherCattleId");
 
                     b.Navigation("Mother");
                 });
@@ -502,9 +521,7 @@ namespace ZambaFarm.Migrations
                 {
                     b.HasOne("ZambaFarm.Models.Goat", "Mother")
                         .WithMany("Offspring")
-                        .HasForeignKey("MotherId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("MotherGoatId");
 
                     b.Navigation("Mother");
                 });
@@ -513,9 +530,7 @@ namespace ZambaFarm.Migrations
                 {
                     b.HasOne("ZambaFarm.Models.Pig", "Mother")
                         .WithMany("Offspring")
-                        .HasForeignKey("MotherId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("MotherPigId");
 
                     b.Navigation("Mother");
                 });
@@ -524,9 +539,7 @@ namespace ZambaFarm.Migrations
                 {
                     b.HasOne("ZambaFarm.Models.Rabbit", "Mother")
                         .WithMany("Offspring")
-                        .HasForeignKey("MotherRabbitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MotherRabbitId");
 
                     b.Navigation("Mother");
                 });
@@ -535,9 +548,7 @@ namespace ZambaFarm.Migrations
                 {
                     b.HasOne("ZambaFarm.Models.Turkey", "Mother")
                         .WithMany("Offspring")
-                        .HasForeignKey("MotherId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("MotherTurkeyId");
 
                     b.Navigation("Mother");
                 });

@@ -28,15 +28,7 @@ public class Startup
          services.AddControllersWithViews();
          services.AddRazorPages();
      }
-  /*  public void ConfigureServices(IServiceCollection services)
-    {
-        services.AddDbContext<FarmContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("FarmContext")));
-
-        services.AddControllersWithViews();
-        // Add other services as needed
-    }*/
-
+ 
 
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

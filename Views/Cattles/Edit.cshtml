@@ -4,63 +4,92 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card ">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Add New Cattle</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" method="post" class="needs-validation" novalidate>
+                        <input type="hidden" asp-for="CattleId">
 
-<h4>Cattle</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="CattleId" />
-            <div class="form-group">
-                <label asp-for="TagNumber" class="control-label"></label>
-                <input asp-for="TagNumber" class="form-control" />
-                <span asp-validation-for="TagNumber" class="text-danger"></span>
+                        <!-- Tag Number -->
+                        <div class="form-group">
+                            <label asp-for="TagNumber" class="control-label"></label>
+                            <input asp-for="TagNumber" class="form-control" />
+                            <span asp-validation-for="TagNumber" class="text-danger"></span>
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="form-group">
+                            <label asp-for="Gender" class="control-label"></label>
+                            <select asp-for="Gender" class="form-control">
+                                <option value="">-- Select Gender --</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+
+                        <!-- Birth Date -->
+                        <div class="form-group">
+                            <label asp-for="BirthDate" class="control-label"></label>
+                            <input asp-for="BirthDate" type="date" class="form-control" />
+                            <span asp-validation-for="BirthDate" class="text-danger"></span>
+                        </div>
+
+                        <!-- Is Pregnant -->
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="IsPregnant" /> @Html.DisplayNameFor(model => model.IsPregnant)
+                            </label>
+                        </div>
+
+                        <!-- Is Nursing -->
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="IsNursing" id="isNursingCheckbox" /> @Html.DisplayNameFor(model => model.IsNursing)
+                            </label>
+                        </div>
+
+                        <!-- Number of Babies Being Nursed -->
+                        <div class="form-group" id="numberOfBabiesDiv" style="display: none;">
+                            <label asp-for="NumberOfBabiesNursed" class="control-label"></label>
+                            <input asp-for="NumberOfBabiesNursed" type="number" class="form-control" />
+                            <span asp-validation-for="NumberOfBabiesNursed" class="text-danger"></span>
+                        </div>
+
+                        <!-- Is Mating -->
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="IsMating" /> @Html.DisplayNameFor(model => model.IsMating)
+                            </label>
+                        </div>
+
+                        <!-- Mating Date -->
+                        <div class="form-group">
+                            <label asp-for="MatingDate" class="control-label"></label>
+                            <input asp-for="MatingDate" type="date" class="form-control" />
+                            <span asp-validation-for="MatingDate" class="text-danger"></span>
+                        </div>
+
+                        <!-- Mother Tag Number -->
+                        <div class="form-group">
+                            <label asp-for="MotherTagNumber" class="control-label"></label>
+                            <input asp-for="MotherTagNumber" class="form-control" placeholder="Enter Mother's Tag Number" />
+                            <span asp-validation-for="MotherTagNumber" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-                <input asp-for="Gender" class="form-control" />
-                <span asp-validation-for="Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BirthDate" class="control-label"></label>
-                <input asp-for="BirthDate" class="form-control" />
-                <span asp-validation-for="BirthDate" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsPregnant" /> @Html.DisplayNameFor(model => model.IsPregnant)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsNursing" /> @Html.DisplayNameFor(model => model.IsNursing)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsMating" /> @Html.DisplayNameFor(model => model.IsMating)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="MatingDate" class="control-label"></label>
-                <input asp-for="MatingDate" class="form-control" />
-                <span asp-validation-for="MatingDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MotherId" class="control-label"></label>
-                <select asp-for="MotherId" class="form-control" asp-items="ViewBag.MotherId"></select>
-                <span asp-validation-for="MotherId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

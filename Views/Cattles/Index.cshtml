@@ -1,22 +1,24 @@
-﻿@model IEnumerable<ZambaFarm.Models.Turkey>
+﻿
+
+@model IEnumerable<ZambaFarm.Models.Cattle>
 
 @{
-    ViewData["Title"] = "Turkey Dashboard";
+    ViewData["Title"] = "Index";
 }
 
 <div class="container mt-5">
     <!-- Page Header -->
     <div class="row justify-content-between align-items-center mb-4">
         <div class="col-md-8">
-            <h2 class="text-primary">Turkey Dashboard</h2>
-            <p class="text-muted">Overview of all registered turkeys</p>
+            <h2 class="text-primary">Cattle Dashboard</h2>
+            <p class="text-muted">Overview of all registered cattle</p>
         </div>
         <div class="col-md-4 text-md-end">
-            <a asp-action="Create" class="btn btn-success"><i class="bi bi-plus-circle me-2"></i>Add New Turkey</a>
+            <a asp-action="Create" class="btn btn-success"><i class="bi bi-plus-circle me-2"></i>Add New cattle</a>
         </div>
     </div>
 
-    <!-- Table for Turkey Data -->
+    <!-- Table for cattle Data -->
     <div class="table-responsive">
         <table class="table table-hover table-bordered align-middle">
             <thead class="table-dark text-center">
@@ -25,7 +27,7 @@
                     <th>Tag Number</th>
                     <th>Gender</th>
                     <th>Birth Date</th>
-                    <th>Egg Laying</th>
+
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -33,29 +35,28 @@
                 @if (!Model.Any())
                 {
                     <tr>
-                        <td colspan="6" class="text-center text-muted">No turkeys found.</td>
+                        <td colspan="6" class="text-center text-muted">No cattle found.</td>
                     </tr>
                 }
                 else
                 {
-                    @foreach (var turkey in Model)
+                    @foreach (var cattle in Model)
                     {
                         <tr>
-                            <td class="text-center">@turkey.TurkeyId</td>
-                            <td>@turkey.TagNumber</td>
-                            <td>@turkey.Gender</td>
-                            <td>@turkey.BirthDate.ToShortDateString()</td>
-                            <td>@turkey.IsEggLaying ? "Yes" : "No"</td>
+                            <td class="text-center">@cattle.CattleId</td>
+                            <td>@cattle.TagNumber</td>
+                            <td>@cattle.Gender</td>
+                            <td>@cattle.BirthDate.ToShortDateString()</td>
 
                             <td class="text-center">
                                 <div class="d-flex justify-content-center">
-                                    <a asp-action="Details" asp-route-id="@turkey.TurkeyId" class="btn btn-info btn-sm me-2">
+                                    <a asp-action="Details" asp-route-id="@cattle.CattleId" class="btn btn-info btn-sm me-2">
                                         <i class="bi bi-info-circle"></i> Details
                                     </a>
-                                    <a asp-action="Edit" asp-route-id="@turkey.TurkeyId" class="btn btn-warning btn-sm me-2">
+                                    <a asp-action="Edit" asp-route-id="@cattle.CattleId" class="btn btn-warning btn-sm me-2">
                                         <i class="bi bi-pencil"></i> Edit
                                     </a>
-                                    <form asp-action="Delete" asp-route-id="@turkey.TurkeyId" method="post" class="d-inline">
+                                    <form asp-action="Delete" asp-route-id="@cattle.CattleId" method="post" class="d-inline">
                                         <button type="submit" class="btn btn-danger btn-sm">
                                             <i class="bi bi-trash"></i> Delete
                                         </button>

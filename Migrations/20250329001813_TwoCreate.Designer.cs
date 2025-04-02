@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZambaFarm.Models;
 
@@ -11,9 +12,11 @@ using ZambaFarm.Models;
 namespace ZambaFarm.Migrations
 {
     [DbContext(typeof(FarmContext))]
-    partial class FarmContextModelSnapshot : ModelSnapshot
+    [Migration("20250329001813_TwoCreate")]
+    partial class TwoCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -254,9 +257,6 @@ namespace ZambaFarm.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("MotherTagNumber");
 
-                    b.Property<int?>("NumberOfBabiesNursed")
-                        .HasColumnType("int");
-
                     b.Property<int?>("NumberOfCalves")
                         .HasColumnType("int");
 
@@ -340,9 +340,6 @@ namespace ZambaFarm.Migrations
                     b.Property<bool>("IsMating")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsNursing")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsPregnant")
                         .HasColumnType("bit");
 
@@ -355,9 +352,6 @@ namespace ZambaFarm.Migrations
                     b.Property<string>("MotherTagNumber")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("MotherTagNumber");
-
-                    b.Property<int?>("NumberOfBabiesNursed")
-                        .HasColumnType("int");
 
                     b.Property<int?>("NumberOfPiglets")
                         .HasColumnType("int");

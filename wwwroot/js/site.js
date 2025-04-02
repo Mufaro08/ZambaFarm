@@ -9,3 +9,15 @@
         toast.show();
     });
 
+
+   
+        // Show or hide the 'Number of Babies Being Nursed' field based on the 'Is Nursing' checkbox
+        document.getElementById("isNursingCheckbox").addEventListener("change", function () {
+            const numberOfBabiesDiv = document.getElementById("numberOfBabiesDiv");
+        if (this.checked) {
+            numberOfBabiesDiv.style.display = "block";
+            } else {
+            numberOfBabiesDiv.style.display = "none";
+            }
+        });
+   

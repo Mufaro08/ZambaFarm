@@ -2,6 +2,18 @@
 
 @{
     ViewData["Title"] = "Rabbit Details";
+
+    // Calculate Age
+    int years = DateTime.Now.Year - Model.BirthDate.Year;
+    int months = DateTime.Now.Month - Model.BirthDate.Month;
+
+    if (months < 0)
+    {
+        years--;
+        months += 12;
+    }
+
+    string ageText = years > 0 ? $"{years} years {months} months" : $"{months} months";
 }
 
 <div class="details-container mt-5 text-white">
@@ -24,31 +36,31 @@
                         <td>@Model.Gender</td>
                     </tr>
 
-                    <!-- Display Birth Date -->
+                    <!-- Display Age -->
                     <tr class="text-white">
-                        <th>Birth Date</th>
-                        <td>@Model.BirthDate.ToShortDateString()</td>
+                        <th>Age</th>
+                        <td>@ageText</td>
                     </tr>
 
                     <!-- Female-specific Details -->
                     @if (Model.Gender == "Female")
                     {
-                        <tr class="text-white">
-                            <th>Is Pregnant</th>
-                            <td>@(Model.IsPregnant ? "Yes" : "No")</td>
-                        </tr>
-                        <tr class="text-white">
-                            <th>Is Nursing</th>
-                            <td>@(Model.IsNursing ? "Yes" : "No")</td>
-                        </tr>
-                        <tr class="text-white">
-                            <th>Mating Date</th>
-                            <td>@(Model.MatingDate?.ToShortDateString() ?? "N/A")</td>
-                        </tr>
-                        <tr class="text-white">
-                            <th>Predicted Delivery Date</th>
-                            <td>@(Model.DeliveryDate?.ToShortDateString() ?? "N/A")</td>
-                        </tr>
+                            <tr class="text-white">
+                                <th>Is Pregnant</th>
+                                <td>@(Model.IsPregnant ? "Yes" : "No")</td>
+                            </tr>
+                            <tr class="text-white">
+                                <th>Is Nursing</th>
+                                <td>@(Model.IsNursing ? "Yes" : "No")</td>
+                            </tr>
+                            <tr class="text-white">
+                                <th>Mating Date</th>
+                                <td>@(Model.MatingDate?.ToShortDateString() ?? "N/A")</td>
+                            </tr>
+                            <tr class="text-white">
+                                <th>Predicted Delivery Date</th>
+                                <td>@(Model.DeliveryDate?.ToShortDateString() ?? "N/A")</td>
+                            </tr>
                     }
 
                     <!-- Display Status -->
@@ -66,18 +78,18 @@
                                 var mother = ViewData["MotherDetails"] as ZambaFarm.Models.Rabbit;
                                 if (mother != null)
                                 {
-                                    <a asp-action="Details" asp-route-id="@mother.RabbitId">
+                                            <a asp-action="Details" asp-route-id="@mother.RabbitId">
                                         @Model.MotherTagNumber
-                                    </a>
+                                            </a>
                                 }
                                 else
                                 {
-                                    <span>Mother not found.</span>
+                                            <span>Mother not found.</span>
                                 }
                             }
                             else
                             {
-                                <span>N/A</span>
+                                    <span>N/A</span>
                             }
                         </td>
                     </tr>
@@ -88,20 +100,31 @@
                         <td>
                             @if (Model.Offspring.Any())
                             {
-                                <ul>
+                                    <ul>
                                     @foreach (var baby in Model.Offspring)
                                     {
-                                        <li>
-                                            <a asp-action="Details" asp-route-id="@baby.RabbitId">
-                                                Tag: @baby.TagNumber, Birth Date: @baby.BirthDate.ToShortDateString()
-                                            </a>
-                                        </li>
+                                        // Calculate age for offspring
+                                        int babyYears = DateTime.Now.Year - baby.BirthDate.Year;
+                                        int babyMonths = DateTime.Now.Month - baby.BirthDate.Month;
+                                        if (babyMonths < 0)
+                                        {
+                                            babyYears--;
+                                            babyMonths += 12;
+                                        }
+
+                                        string babyAge = babyYears > 0 ? $"{babyYears} years {babyMonths} months" : $"{babyMonths} months";
+
+                                                <li>
+                                                    <a asp-action="Details" asp-route-id="@baby.RabbitId">
+                                                        Tag: @baby.TagNumber, Age: @babyAge
+                                                    </a>
+                                                </li>
                                     }
-                                </ul>
+                                    </ul>
                             }
                             else
                             {
-                                <span>No offspring yet.</span>
+                                    <span>No offspring yet.</span>
                             }
                         </td>
                     </tr>
@@ -120,3 +143,4 @@
         </div>
     </div>
 </div>
+ 

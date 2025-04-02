@@ -1,8 +1,117 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Welcome to Zamba Farm";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zamba Farm - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Header -->
+        <header class="text-center mb-4">
+            <h1 class="display-4">Welcome to Zamba Farm!</h1>
+            <p class="lead">Your trusted partner in sustainable and happy farming.</p>
+        </header>
+
+
+
+        <!-- Main Content -->
+        <div class="row">
+            <div class="col-md-6">
+                <img src="data:image/jpeg;base64,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" class="img-fluid rounded" alt="Farm Image">
+            </div>
+            <div class="col-md-6">
+                <h2>About Us</h2>
+                <p>
+                    Mazambani Farm is located in Mapinga along Chinhoyi road, we are a home to many different kind of species of animals and crops.
+                    Among the animals we hosts we have Pigs, Chickens, Rabbits, Ducks, catttle, Goats and Pigeons which are very healthy as we have an animal vet who comes regularly to dose and check for diseases on animals. On the agricultural side we do hot culture- (green vegetables, tomatoes, onions, cabages) maize for animal feed, tobacco, sugar beans and soya beans.
+                </p>
+                <p>Our crop production is 100% organic as we use manure from the cattle kraal,and our animals eat feed from the crops we grow to make sure that they eat healthy foor that has not been proccessed. Our care takers are cheerful people who love animals at heart which make them take good care of the farm. Those interested in learning on how we are doing it so well will be hosting lessons soon.</p>
+
+
+                <p>We also allow visitors at the farm to come and tour Mazambani farm but only with appointments, school trips are also invited to inspire children.</p>
+                <br>
+
+                <a href="#learnMore" class="btn btn-success">Learn More</a>
+            </div>
+        </div>
+        <section class="values">
+            <h2>Values</h2>
+            <hr>
+
+            <br>
+            <div class="values-box">
+                <br>
+                <h3>Protecting the lane</h3>
+                <p>we continously strive to improve our soil by growing a wide variety of crops, to give a balanced rotation to the farm, and utilising the manure from our animals as a natural fertiliser to reduce the need for synthetic fertiliser</p>
+            </div>
+
+            <div class="values-box">
+                <h3>Respecting our animals</h3>
+                <p>Our animals enjoy the best possible welfare. we ensure access to lots of space, both inside and outside, which helps them to express natural behaviours and to live happ and contended lives</p>
+            </div>
+
+            <div class="values-box">
+                <H3>Increasing Biodiversity</H3>
+                <p>By planting grass margins and field corners we actively encourage a wider divesity of plants, insects, birds and mammals across the farm. We plant new hedges and manage existing ones to help protect the wildlife around us, through out the year.</p>
+            </div>
+
+            <div class="values-box">
+                <h3>Supporting </h3>
+                <p>We are focused on succefully growing our family business and committed to making a positive impact on the communities where we live and work. Not only through what we produce but what we give back through our charitable activies</p>
+            </div>
+
+            <div class="values-box">
+                <h3>Improving climate</h3>
+                <p>We actively plan for carbon sequestration across our forests and soil, and we endevourto waste nothing, from the grains we grow being incoporated into our animals' diet, and th straw we use to bed them up.</p>
+            </div>
+        </section>
+
+        <section id="contact-form" class="contact-section">
+            <div class="container mt-5">
+                <h2>Contact Us</h2>
+                <div class="contact-form">
+                    <form id="contactForm" action="https://formsubmit.co/18d69851a769661bf305a83b6324a105" method="POST">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="name">Name</label>
+                                <input type="text" name="Name" class="form-control" id="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="email">Email</label>
+                                <input type="email" name="email " class="form-control" id="email" placeholder="Your Email" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" name="phone " class="form-control" id="phone" placeholder="Your Phone Number" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="subject">Subject</label>
+                                <input type="text" name="subject " class="form-control" id="subject" placeholder="Subject" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea class="form-control" name="message" id="message" rows="5" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                        <input type="hidden" name="_next" value="https://mufarodemo5.wuaze.com/thanks.html">
+                    </form>
+                </div>
+            </div>
+        </section>
+        <br />
+        <hr />
+
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,17 +1,21 @@
 ﻿@model ZambaFarm.Models.Rabbit
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit Rabbit";
 }
 
-<h1>Create</h1>
+<h1>Edit Rabbit</h1>
 
 <h4>Rabbit</h4>
 <hr />
 <div class="row">
     <div class="col-md-6">
-        <form asp-action="Create">
+        <!-- Ensure the form action is set to "Edit" -->
+        <form asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Hidden field for RabbitId -->
+            <input type="hidden" asp-for="RabbitId" />
 
             <!-- Tag Number -->
             <div class="form-group">
@@ -82,7 +86,7 @@
 
             <!-- Submit Button -->
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save Changes" class="btn btn-primary" />
             </div>
         </form>
     </div>
