@@ -1,12 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ZambaFarm.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using ZambaFarm.Models;
 
-namespace FarmMonitor.Controllers
+namespace ZambaFarm.Controllers
 {
-
-    [ApiController]
-    [Route("api/dashboard")]
-    public class DashboardController : ControllerBase
+    [Route("[controller]")]
+    public class DashboardController : Controller
     {
         private readonly FarmContext _context;
 
@@ -15,67 +19,58 @@ namespace FarmMonitor.Controllers
             _context = context;
         }
 
-        // 1. Get total count of each animal type
-        [HttpGet("animalCounts")]
-        public IActionResult GetAnimalCounts()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            var data = new
+            // Get total counts for each animal type
+            var animalCounts = new Dictionary<string, int>
             {
-                Goats = _context.Goats.Count(),
-                Pigs = _context.Pigs.Count(),
-                Turkeys = _context.Turkeys.Count(),
-                Rabbits = _context.Rabbits.Count()
+                { "Pigs", await _context.Pigs.CountAsync() },
+                { "Goats", await _context.Goats.CountAsync() },
+                { "Turkeys", await _context.Turkeys.CountAsync() },
+                { "Rabbits", await _context.Rabbits.CountAsync() }
             };
 
-            return Ok(data);
-        }
-
-        // 2. Get monthly animal counts
-        [HttpGet("monthlyAnimalCounts")]
-        public IActionResult GetMonthlyAnimalCounts()
-        {
-            var monthlyData = _context.Goats
-                .GroupBy(g => new { g.BirthDate.Year, g.BirthDate.Month })
-                .Select(g => new
-                {
-                    Year = g.Key.Year,
-                    Month = g.Key.Month,
-                    Count = g.Count(),
-                    Species = "Goats"
-                })
-                .Union(_context.Pigs
+            // Get monthly count for each animal type
+            var startDate = DateTime.Now.AddMonths(-6); // Last 6 months
+            var monthlyCounts = await _context.Pigs
+                .Where(p => p.BirthDate >= startDate)
                 .GroupBy(p => new { p.BirthDate.Year, p.BirthDate.Month })
-                .Select(p => new
-                {
-                    Year = p.Key.Year,
-                    Month = p.Key.Month,
-                    Count = p.Count(),
-                    Species = "Pigs"
-                }))
-                .Union(_context.Turkeys
-                .GroupBy(t => new { t.BirthDate.Year, t.BirthDate.Month })
-                .Select(t => new
-                {
-                    Year = t.Key.Year,
-                    Month = t.Key.Month,
-                    Count = t.Count(),
-                    Species = "Turkeys"
-                }))
-                .Union(_context.Rabbits
-                .GroupBy(r => new { r.BirthDate.Year, r.BirthDate.Month })
-                .Select(r => new
-                {
-                    Year = r.Key.Year,
-                    Month = r.Key.Month,
-                    Count = r.Count(),
-                    Species = "Rabbits"
-                }))
-                .OrderBy(d => d.Year).ThenBy(d => d.Month)
-                .ToList();
+                .Select(g => new { g.Key.Year, g.Key.Month, Count = g.Count() })
+                .ToListAsync();
 
-            return Ok(monthlyData);
+            var goatMonthlyCounts = await _context.Goats
+                .Where(g => g.BirthDate >= startDate)
+                .GroupBy(g => new { g.BirthDate.Year, g.BirthDate.Month })
+                .Select(g => new { g.Key.Year, g.Key.Month, Count = g.Count() })
+                .ToListAsync();
+
+            var turkeyMonthlyCounts = await _context.Turkeys
+                .Where(t => t.BirthDate >= startDate)
+                .GroupBy(t => new { t.BirthDate.Year, t.BirthDate.Month })
+                .Select(g => new { g.Key.Year, g.Key.Month, Count = g.Count() })
+                .ToListAsync();
+
+            var rabbitMonthlyCounts = await _context.Rabbits
+                .Where(r => r.BirthDate >= startDate)
+                .GroupBy(r => new { r.BirthDate.Year, r.BirthDate.Month })
+                .Select(g => new { g.Key.Year, g.Key.Month, Count = g.Count() })
+                .ToListAsync();
+
+            ViewData["AnimalCounts"] = animalCounts;
+            ViewData["MonthlyData"] = new Dictionary<string, List<object>>
+            {
+                { "Pigs", monthlyCounts.Cast<object>().ToList() },
+                { "Goats", goatMonthlyCounts.Cast<object>().ToList() },
+                { "Turkeys", turkeyMonthlyCounts.Cast<object>().ToList() },
+                { "Rabbits", rabbitMonthlyCounts.Cast<object>().ToList() }
+            };
+
+            return View();
         }
     }
+
+
 
 
 
