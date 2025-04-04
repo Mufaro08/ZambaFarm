@@ -1,0 +1,58 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> _userManager
+
+
+@model IEnumerable<IdentityUser>
+
+<h2>Manage Users</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Assigned Roles</th>
+            <th>Assign Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>
+                    @foreach (var role in await _userManager.GetRolesAsync(user))
+                    {
+                        <span>@role</span>
+
+                        <br />
+                    }
+                </td>
+                <td>
+                    <form method="post" asp-action="AssignRoleToUser">
+                        <input type="hidden" name="userId" value="@user.Id" />
+                        <select name="roleName" class="form-control">
+                            <option value="Admin">Admin</option>
+                            <option value="Manager">Manager</option>
+                            <option value="User">User</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">Assign Role</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

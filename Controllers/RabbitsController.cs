@@ -5,6 +5,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace ZambaFarm.Controllers
 {
@@ -25,6 +27,7 @@ namespace ZambaFarm.Controllers
         }
 
         // GET: Rabbits/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -33,6 +36,7 @@ namespace ZambaFarm.Controllers
         // POST: Rabbits/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("RabbitId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherRabbitId,MotherTagNumber")] Rabbit rabbit)
         {
             if (!ModelState.IsValid)
@@ -103,6 +107,7 @@ namespace ZambaFarm.Controllers
 
 
         // GET: Rabbits/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -128,6 +133,7 @@ namespace ZambaFarm.Controllers
         // POST: Rabbits/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("RabbitId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherRabbitId,MotherTagNumber, Offspring")] Rabbit rabbit)
         {
             if (id != rabbit.RabbitId)
@@ -176,6 +182,7 @@ namespace ZambaFarm.Controllers
         }
 
         // GET: Rabbits/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -202,6 +209,7 @@ namespace ZambaFarm.Controllers
         // POST: Rabbits/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try
