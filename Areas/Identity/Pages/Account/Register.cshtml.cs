@@ -1,4 +1,4 @@
-/*using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -118,11 +118,11 @@ namespace ZambaFarm.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private ApplicationUser CreateUser()
+        private IdentityUser CreateUser()
         {
             try
             {
-                return (ApplicationUser)Activator.CreateInstance<IdentityUser>();
+                return (IdentityUser)Activator.CreateInstance<IdentityUser>();
             }
             catch
             {
@@ -141,7 +141,6 @@ namespace ZambaFarm.Areas.Identity.Pages.Account
         }
     }
 }
-*/
 
 
 
@@ -152,6 +151,7 @@ namespace ZambaFarm.Areas.Identity.Pages.Account
 
 
 
+/*
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
@@ -340,3 +340,4 @@ namespace ZambaFarm.Areas.Identity.Pages.Account
         }
     }
 }
+*/

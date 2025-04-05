@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using ZambaFarm.Data;
 using ZambaFarm.Models;
 
@@ -17,6 +19,24 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDbContext<FarmContext>(options =>
     options.UseSqlServer(farmContextConnectionString));
 
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredLength = 6;
+})
+    .AddRoles<IdentityRole>() // Enable role management
+    .AddEntityFrameworkStores<FarmContext>();
+
+/*
+builder.Services.AddDefaultIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<FarmContext>();
+*/
+
+/*
 // Configure Identity with IdentityUser (FIXED)
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
@@ -29,7 +49,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<FarmContext>() // Store users in FarmContext
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders(); */
 
 // Configure Identity cookie settings for login
 builder.Services.ConfigureApplicationCookie(options =>
@@ -41,6 +61,10 @@ builder.Services.ConfigureApplicationCookie(options =>
 // Register Razor Pages (important for Identity)
 builder.Services.AddRazorPages();  // Add this line to register Razor Pages services.
 builder.Services.AddControllersWithViews();
+
+
+
+
 
 var app = builder.Build();
 

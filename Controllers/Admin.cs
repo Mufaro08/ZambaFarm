@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ZambaFarm.Controllers
 {
-    [Authorize(Roles = "Admin")]  // Ensuring only Admins have access
+    //[Authorize(Roles = "Admin")]  // Ensuring only Admins have access
     public class AdminController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
