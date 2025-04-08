@@ -31,26 +31,6 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     .AddRoles<IdentityRole>() // Enable role management
     .AddEntityFrameworkStores<FarmContext>();
 
-/*
-builder.Services.AddDefaultIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<FarmContext>();
-*/
-
-/*
-// Configure Identity with IdentityUser (FIXED)
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
-{
-    options.SignIn.RequireConfirmedAccount = true;
-    options.Password.RequireDigit = true;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireUppercase = true;
-    options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequiredLength = 6;
-})
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<FarmContext>() // Store users in FarmContext
-    .AddDefaultTokenProviders(); */
-
 // Configure Identity cookie settings for login
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -61,10 +41,6 @@ builder.Services.ConfigureApplicationCookie(options =>
 // Register Razor Pages (important for Identity)
 builder.Services.AddRazorPages();  // Add this line to register Razor Pages services.
 builder.Services.AddControllersWithViews();
-
-
-
-
 
 var app = builder.Build();
 

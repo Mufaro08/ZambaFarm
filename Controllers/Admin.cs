@@ -58,10 +58,35 @@ namespace ZambaFarm.Controllers
             return RedirectToAction("Index");
         }
 
+        // Delete a user by ID
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                TempData["SuccessMessage"] = $"User {user.UserName} has been deleted.";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Error deleting user.";
+            }
+
+            return RedirectToAction("Index");
+     }
+
+
+
         // Create a user manually (e.g., Admin for testing)
         public async Task<IActionResult> CreateAdminUser()
         {
-            var user = new IdentityUser { UserName = "muf@gmail.com", Email = "muf@gmail.com" };
+            var user = new IdentityUser { UserName = "mufa", Email = "mufa@gmail.com" };
             var result = await _userManager.CreateAsync(user, "Admin@123");
 
             if (result.Succeeded)
