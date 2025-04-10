@@ -5,6 +5,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace ZambaFarm.Controllers
 {
@@ -25,12 +27,14 @@ namespace ZambaFarm.Controllers
         }
 
         // GET: Turkeys/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View(new Turkey());
         }
 
         // POST: Turkeys/Create
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TurkeyId,TagNumber,Gender,BirthDate,IsEggLaying,NumberOfEggs,IsMating,MatingDate,MotherTurkeyId,MotherTagNumber")] Turkey turkey)
@@ -104,6 +108,7 @@ namespace ZambaFarm.Controllers
         }
 
         // GET: Turkeys/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -127,6 +132,7 @@ namespace ZambaFarm.Controllers
         }
 
         // POST: Turkeys/Edit/5
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("TurkeyId,TagNumber,Gender,BirthDate,IsEggLaying,NumberOfEggs,IsMating,MatingDate,MotherTurkeyId,MotherTagNumber, Offspring")] Turkey turkey)
@@ -171,6 +177,7 @@ namespace ZambaFarm.Controllers
         }
 
         // GET: Turkeys/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -195,6 +202,7 @@ namespace ZambaFarm.Controllers
         }
 
         // POST: Turkeys/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

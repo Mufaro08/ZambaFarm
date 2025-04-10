@@ -31,6 +31,7 @@ namespace ZambaFarm.Models
 
         public int? NumberOfEggs { get; set; } // Nullable to handle the number of eggs properly
 
+        public DateTime DateAdded { get; set; } = DateTime.Now;
         public DateTime? EggLayingDate => IsMated && MatingDate.HasValue
             ? MatingDate.Value.AddDays(28)  // Turkeys have a 28-day incubation period for eggs
             : (DateTime?)null;

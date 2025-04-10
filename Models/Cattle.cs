@@ -32,7 +32,8 @@ namespace ZambaFarm.Models
         public bool IsNursing { get; set; }
 
         public int? NumberOfBabiesNursed { get; set; }
-        
+        public DateTime DateAdded { get; set; } = DateTime.Now;
+
         public DateTime? DeliveryDate => IsPregnant && MatingDate.HasValue
             ? MatingDate.Value.AddDays(280)  // Cattle pregnancy lasts around 280 days
             : (DateTime?)null;

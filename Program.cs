@@ -21,7 +21,7 @@ builder.Services.AddDbContext<FarmContext>(options =>
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = true;
+    options.SignIn.RequireConfirmedAccount = false;
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireUppercase = true;

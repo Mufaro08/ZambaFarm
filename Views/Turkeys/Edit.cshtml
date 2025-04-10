@@ -3,41 +3,49 @@
 @{
     ViewData["Title"] = "Edit Turkey";
 }
-
 <div class="container mt-5">
-    <h2 class="text-primary">Edit Turkey</h2>
-    <p class="text-muted">Make changes to the turkey's details below.</p>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card ">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>EditTurkey</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" method="post" id="TurkeyForm">
 
-    <form asp-action="Edit" method="post" class="needs-validation" novalidate>
-        <input type="hidden" asp-for="TurkeyId" />
+                        <!-- Tag Number -->
+                        <div class="form-group">
+                            <label asp-for="TagNumber" class="control-label"></label>
+                            <input asp-for="TagNumber" class="form-control" />
+                            <span asp-validation-for="TagNumber" class="text-danger"></span>
+                        </div>
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="TagNumber" class="form-label">Tag Number</label>
-                <input type="text" class="form-control" id="TagNumber" name="TagNumber" value="@Model.TagNumber" required />
-                <div class="invalid-feedback">Tag number is required.</div>
-            </div>
+                        <!-- Gender -->
+                        <div class="form-group">
+                            <label asp-for="Gender" class="control-label"></label>
+                            <select asp-for="Gender" class="form-control">
+                                <option value="">-- Select Gender --</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
 
-            <div class="col-md-6 mb-3">
-                <label for="Gender" class="form-label">Gender</label>
-                select asp-for="Gender" class="form-control">
-                <option value="">-- Select Gender --</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                </select>
-                <div class="invalid-feedback">Gender is required.</div>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="BirthDate" class="form-label">Birth Date</label>
-                <input type="date" class="form-control" id="BirthDate" name="BirthDate" value="@Model.BirthDate.ToString("yyyy-MM-dd")" required />
-                <div class="invalid-feedback">Birth date is required.</div>
+                        <!-- Birth Date -->
+                        <div class="form-group">
+                            <label asp-for="BirthDate" class="control-label"></label>
+                            <input asp-for="BirthDate" type="date" class="form-control" />
+                            <span asp-validation-for="BirthDate" class="text-danger"></span>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" value="Edit" class="btn btn-success">Save</button>
+                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-
-        <div class="mb-3 text-md-end">
-            <button type="submit" class="btn btn-success">Save Changes</button>
-            <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
-        </div>
-    </form>
+    </div>
 </div>
+
+

@@ -32,6 +32,7 @@ namespace ZambaFarm.Models
         public bool IsNursing { get; set; }
 
         public int? NumberOfBabiesNursed { get; set; }
+        public DateTime DateAdded { get; set; } = DateTime.Now;
 
         public DateTime? DeliveryDate => IsPregnant && MatingDate.HasValue
             ? MatingDate.Value.AddDays(114)  // Pigs have a gestation period of 114 days

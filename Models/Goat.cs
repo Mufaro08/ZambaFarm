@@ -27,6 +27,7 @@ namespace ZambaFarm.Models
 
         public int? MotherGoatId { get; set; }
         public string? MotherTagNumber { get; set; }
+        public DateTime DateAdded { get; set; } = DateTime.Now;
 
         public DateTime? DeliveryDate => IsPregnant && MatingDate.HasValue
             ? MatingDate.Value.AddDays(150)  // Goats have a gestation period of about 150 days

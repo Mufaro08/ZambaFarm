@@ -36,6 +36,65 @@ public class DashboardController : Controller
         return Ok(animalCounts);
     }
 
+    [HttpGet("api/monthlyAnimalCounts")]
+    public IActionResult GetMonthlyAnimalCounts()
+    {
+        var monthlyCounts = _context.Goats
+    .GroupBy(a => new { Year = a.DateAdded.Year, Month = a.DateAdded.Month })
+    .Select(g => new
+    {
+        Species = "Goats",
+        Year = g.Key.Year,
+        Month = g.Key.Month,
+        Count = g.Count()
+    })
+    .Union(
+        _context.Pigs.GroupBy(a => new { Year = a.DateAdded.Year, Month = a.DateAdded.Month })
+        .Select(g => new
+        {
+            Species = "Pigs",
+            Year = g.Key.Year,
+            Month = g.Key.Month,
+            Count = g.Count()
+        })
+    )
+    .Union(
+        _context.Cattles.GroupBy(a => new { Year = a.DateAdded.Year, Month = a.DateAdded.Month })
+        .Select(g => new
+        {
+            Species = "Cows",
+            Year = g.Key.Year,
+            Month = g.Key.Month,
+            Count = g.Count()
+        })
+    )
+    .Union(
+        _context.Rabbits.GroupBy(a => new { Year = a.DateAdded.Year, Month = a.DateAdded.Month })
+        .Select(g => new
+        {
+            Species = "Rabbits",
+            Year = g.Key.Year,
+            Month = g.Key.Month,
+            Count = g.Count()
+        })
+    )
+    .Union(
+        _context.Turkeys.GroupBy(a => new { Year = a.DateAdded.Year, Month = a.DateAdded.Month })
+        .Select(g => new
+        {
+            Species = "Turkeys",
+            Year = g.Key.Year,
+            Month = g.Key.Month,
+            Count = g.Count()
+        })
+    )
+    .ToList();
+
+
+        return Ok(monthlyCounts);
+    }
+
+
 
 
 

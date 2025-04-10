@@ -5,6 +5,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace ZambaFarm.Controllers
 {
@@ -25,12 +27,14 @@ namespace ZambaFarm.Controllers
         }
 
         // GET: Cattles/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View(new Cattle());
         }
 
         // POST: Cattles/Create
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CattleId,TagNumber,Gender,BirthDate,IsPregnant,NumberOfBabiesNursed,IsMating,MatingDate,MotherCattleId,MotherTagNumber")] Cattle cattle)
@@ -103,6 +107,7 @@ namespace ZambaFarm.Controllers
 
 
         // GET: Cattle/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -126,6 +131,7 @@ namespace ZambaFarm.Controllers
         }
 
         // POST: Cattle/Edit/5
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CattletId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherCattleId,MotherTagNumber, Offspring")] Cattle cattle)
@@ -176,6 +182,7 @@ namespace ZambaFarm.Controllers
         }
 
         // GET: Cattle/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -200,6 +207,7 @@ namespace ZambaFarm.Controllers
         }
 
         // POST: Cattle/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

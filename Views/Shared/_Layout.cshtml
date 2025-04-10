@@ -4,11 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ZambaFarm</title>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ZambaFarm.styles.css" asp-append-version="true" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -52,10 +58,10 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="container mb-3">
+        <main role="main" class="pb-3 mb-3">
             @RenderBody()
-            <div aria-live="polite" aria-atomic="true" class="position-relative">
+           <div aria-live="polite" aria-atomic="true" class="position-relative">
                 <div class="toast-container position-fixed bottom-0 end-0 p-3">
                     @if (TempData["SuccessMessage"] != null)
                     {
@@ -80,20 +86,49 @@
                         </div>
                     }
                 </div>
-            </div>
-
+              </div> 
+              
         </main>
     </div>
 
-    <!-- Footer -->    
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - ZambaFarm | Built with <span style="color: red;">&#10084;</span> by <a href="https://www.elfo.co.zw target=" _blank" rel="noopener noreferrer" ">Elfo</a> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <!-- Footer -->
+           
+        <footer class="border-top footer text-muted mt-3">
+
+        <div class="mt-auto">
+            &copy; 2025 - ZambaFarm | Built with <span style="color: red;">&#10084;</span> by
+            <a href="https://www.elfo.co.zw" target="_blank" rel="noopener noreferrer">Elfo</a> |
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+       
+        </footer>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+                @await RenderSectionAsync("Scripts", required: false)
+    
+    <script>
+        AOS.init({
+            duration: 1200, // Animation duration in milliseconds
+            once: true // Animation should happen only once
+        });
+
+
+        $(document).ready(function () {
+            // Smooth scrolling for links
+            $('a.nav-link').on('click', function (event) {
+                if (this.hash !== "") {
+                    event.preventDefault();
+                    var hash = this.hash;
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function () {
+                        window.location.hash = hash;
+                    });
+                }
+            });
+        });
+    </script>
+   
+
 </body>
 </html>

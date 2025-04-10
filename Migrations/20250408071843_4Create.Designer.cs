@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZambaFarm.Models;
 
@@ -11,9 +12,11 @@ using ZambaFarm.Models;
 namespace ZambaFarm.Migrations
 {
     [DbContext(typeof(FarmContext))]
-    partial class FarmContextModelSnapshot : ModelSnapshot
+    [Migration("20250408071843_4Create")]
+    partial class _4Create
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -239,9 +242,6 @@ namespace ZambaFarm.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -291,9 +291,6 @@ namespace ZambaFarm.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GoatId"));
 
                     b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Gender")
@@ -347,9 +344,6 @@ namespace ZambaFarm.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -401,9 +395,6 @@ namespace ZambaFarm.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -450,9 +441,6 @@ namespace ZambaFarm.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TurkeyId"));
 
                     b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Gender")

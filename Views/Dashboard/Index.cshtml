@@ -15,7 +15,7 @@
 <script>
     async function loadCharts() {
         // Fetch animal counts
-        const animalCountsRes = await fetch('/api/dashboard/animalCounts');
+        const animalCountsRes = await fetch('/dashboard/api/animalCounts');
         const animalCounts = await animalCountsRes.json();
 
         const totalAnimalChart = new Chart(document.getElementById('totalAnimalsChart'), {
@@ -31,7 +31,7 @@
         });
 
         // Fetch monthly animal count data
-        const monthlyCountsRes = await fetch('/api/dashboard/monthlyAnimalCounts');
+        const monthlyCountsRes = await fetch('/dashboard/api/monthlyAnimalCounts');
         const monthlyCounts = await monthlyCountsRes.json();
 
         const labels = [...new Set(monthlyCounts.map(d => `${d.Year}-${d.Month}`))];

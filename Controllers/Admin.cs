@@ -86,7 +86,7 @@ namespace ZambaFarm.Controllers
         // Create a user manually (e.g., Admin for testing)
         public async Task<IActionResult> CreateAdminUser()
         {
-            var user = new IdentityUser { UserName = "mufa", Email = "mufa@gmail.com" };
+            var user = new IdentityUser { UserName = "mufaro", Email = "mufaro@gmail.com" };
             var result = await _userManager.CreateAsync(user, "Admin@123");
 
             if (result.Succeeded)

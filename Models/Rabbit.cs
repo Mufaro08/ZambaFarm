@@ -29,8 +29,9 @@ public class Rabbit
 
     public int? MotherRabbitId { get; set; }
     public string? MotherTagNumber { get; set; }
+        public DateTime DateAdded { get; set; } = DateTime.Now;
 
-    public DateTime? DeliveryDate => IsPregnant && MatingDate.HasValue
+        public DateTime? DeliveryDate => IsPregnant && MatingDate.HasValue
         ? MatingDate.Value.AddDays(30)
         : (DateTime?)null;
 

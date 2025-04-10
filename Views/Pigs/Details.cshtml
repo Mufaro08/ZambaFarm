@@ -2,6 +2,18 @@
 
 @{
     ViewData["Title"] = "Pig Details";
+
+    // Calculate Age
+    int years = DateTime.Now.Year - Model.BirthDate.Year;
+    int months = DateTime.Now.Month - Model.BirthDate.Month;
+
+    if (months < 0)
+    {
+        years--;
+        months += 12;
+    }
+
+    string ageText = years > 0 ? $"{years} years {months} months" : $"{months} months";
 }
 
 <div class="details-container mt-5 text-white">
@@ -27,10 +39,10 @@
                         <td>@Model.Gender</td>
                     </tr>
 
-                    <!-- Display Birth Date -->
+                    <!-- Display Age -->
                     <tr class="text-white">
-                        <th>Birth Date</th>
-                        <td>@Model.BirthDate.ToShortDateString()</td>
+                        <th>Age</th>
+                        <td>@ageText</td>
                     </tr>
 
                     <!-- Female-specific Details -->
