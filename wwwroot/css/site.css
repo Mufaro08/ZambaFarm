@@ -1,5 +1,6 @@
 html {
     font-size: 14px;
+    background-color:#FCFAEE;
     
 }
 
@@ -21,8 +22,12 @@ html {
 
 body {
     margin-bottom: 60px;
+    scroll-behavior: smooth;
 }
 
+.nav {
+    background-color: #d9e267;
+}
 
 
 /* Stylish card design for animal details */
@@ -112,9 +117,16 @@ body {
     bottom: 0;
     width: 100%;
     background-color: #b6ebb6;
-    color: white;
+    color: #BF00FF;
     text-align: center;
     padding: 10px;
+}
+.green {
+    background-color: #b6ebb6;
+}
+
+.shad{
+    text-shadow: 1px 1px 2px #000223;
 }
 
 h2 {
@@ -170,3 +182,51 @@ h3{
         background-color: var(--primary-color);
         border-color: var(--primary-color);
     }
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+    .card img {
+        width: 100%;
+        height: auto;
+    }
+
+.card-content {
+    padding: 10px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+.card img{
+    width: 100%;
+    height: 300px;
+    object-fit:cover;
+}
