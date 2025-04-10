@@ -37,7 +37,7 @@ namespace ZambaFarm.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("RabbitId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherRabbitId,MotherTagNumber")] Rabbit rabbit)
+        public async Task<IActionResult> Create([Bind("RabbitId,TagNumber,Gender,BirthDate,IsPregnant,Cage,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherRabbitId,MotherTagNumber")] Rabbit rabbit)
         {
             if (!ModelState.IsValid)
             {
@@ -105,7 +105,101 @@ namespace ZambaFarm.Controllers
             }
         }
 
+        /*
+        // GET: Rabbits/Edit/5
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Error", new { message = "Rabbit ID not specified." });
+            }
 
+            try
+            {
+                var rabbit = await _context.Rabbits
+                    .Include(r => r.Offspring) // ✅ Ensure offspring are included
+                    .FirstOrDefaultAsync(r => r.RabbitId == id);
+
+                if (rabbit == null)
+                {
+                    return RedirectToAction("Error", new { message = "Rabbit not found." });
+                }
+
+                return View(rabbit);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", new { message = $"Error loading rabbit for edit: {ex.Message}" });
+            }
+        }
+
+        // POST: Rabbits/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(int id, [Bind("RabbitId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherRabbitId")] Rabbit updatedRabbit)
+        {
+            if (id != updatedRabbit.RabbitId)
+            {
+                return RedirectToAction("Error", new { message = "Rabbit ID mismatch." });
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                TempData["ErrorMessage"] = "Validation failed: " + string.Join(", ", errors);
+                return View(updatedRabbit);
+            }
+
+            try
+            {
+                var existingRabbit = await _context.Rabbits
+                    .Include(r => r.Offspring) // ✅ Include offspring to keep the relationship
+                    .FirstOrDefaultAsync(r => r.RabbitId == id);
+
+                if (existingRabbit == null)
+                {
+                    return RedirectToAction("Error", new { message = "Rabbit not found in database." });
+                }
+
+                // ✅ Update only the fields that changed
+                existingRabbit.TagNumber = updatedRabbit.TagNumber;
+                existingRabbit.Gender = updatedRabbit.Gender;
+                existingRabbit.BirthDate = updatedRabbit.BirthDate;
+                existingRabbit.IsPregnant = updatedRabbit.IsPregnant;
+                existingRabbit.IsNursing = updatedRabbit.IsNursing;
+                existingRabbit.IsMating = updatedRabbit.IsMating;
+                existingRabbit.MatingDate = updatedRabbit.MatingDate;
+                existingRabbit.NumberOfBabiesNursed = updatedRabbit.NumberOfBabiesNursed;
+                existingRabbit.MotherRabbitId = updatedRabbit.MotherRabbitId;
+
+                // ✅ Ensure offspring remain linked
+                foreach (var baby in existingRabbit.Offspring)
+                {
+                    baby.MotherRabbitId = existingRabbit.RabbitId;
+                }
+
+                await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "Rabbit updated successfully!";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error updating rabbit: {ex.Message}";
+                return View(updatedRabbit);
+            }
+        }*/
+
+
+
+
+
+
+
+
+        
         // GET: Rabbits/Edit/5
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)

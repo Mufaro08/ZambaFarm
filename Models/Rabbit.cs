@@ -16,8 +16,9 @@ public class Rabbit
 
     [Required(ErrorMessage = "Birth Date is required.")]
     public DateTime BirthDate { get; set; }
+        public int Cage { get; set; }
 
-    [Display(Name = "Is Pregnant")]
+        [Display(Name = "Is Pregnant")]
     public bool IsPregnant { get; set; }
 
     [Display(Name = "Is Nursing")]
@@ -49,23 +50,42 @@ public class Rabbit
         public virtual Rabbit? Mother { get; set; } // Navigation property
 
 
+          public void AddNursedBabies()
+      {
+          if (IsNursing && NumberOfBabiesNursed.HasValue)
+          {
+              for (int i = 0; i < NumberOfBabiesNursed.Value; i++)
+              {
+                  Offspring.Add(new Rabbit
+                  {
+                      TagNumber = $"Baby-{i + 1}-{Guid.NewGuid().ToString().Substring(0, 5)}",
+                      Gender = "Unknown",
+                      BirthDate = DateTime.Now,
+                      MotherTagNumber = this.TagNumber,
+                      Mother = this
+                  });
+              }
+          }
+      }
+        /*
         public void AddNursedBabies()
-    {
-        if (IsNursing && NumberOfBabiesNursed.HasValue)
         {
-            for (int i = 0; i < NumberOfBabiesNursed.Value; i++)
+            if (IsNursing && NumberOfBabiesNursed.HasValue)
             {
-                Offspring.Add(new Rabbit
+                for (int i = 0; i < NumberOfBabiesNursed.Value; i++)
                 {
-                    TagNumber = $"Baby-{i + 1}-{Guid.NewGuid().ToString().Substring(0, 5)}",
-                    Gender = "Unknown",
-                    BirthDate = DateTime.Now,
-                    MotherTagNumber = this.TagNumber,
-                    Mother = this
-                });
+                    Offspring.Add(new Rabbit
+                    {
+                        TagNumber = $"Baby-{i + 1}-{Guid.NewGuid().ToString().Substring(0, 5)}",
+                        Gender = "Unknown",
+                        BirthDate = DateTime.Now,
+                        MotherRabbitId = this.RabbitId, // ✅ Link offspring using RabbitId
+                        Mother = this
+                    });
+                }
             }
-        }
-    }
-       
+        }*/
+
+
     }
 }

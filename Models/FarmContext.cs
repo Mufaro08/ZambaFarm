@@ -28,7 +28,17 @@ namespace ZambaFarm.Models
             // Customize table name for Turkey
             modelBuilder.Entity<Turkey>().ToTable("turkeys");
 
-            // Configure MotherTagNumber for different entities
+            /*protected override void OnModelCreating(ModelBuilder modelBuilder)
+        
+            modelBuilder.Entity<Rabbit>()
+                .HasOne(r => r.Mother)
+                .WithMany(m => m.Offspring)
+                .HasForeignKey(r => r.MotherRabbitId)
+                .OnDelete(DeleteBehavior.Restrict); // ✅ Prevents accidental deletion
+        
+            */
+
+        // Configure MotherTagNumber for different entities
             modelBuilder.Entity<Rabbit>().Property(r => r.MotherTagNumber).HasColumnName("MotherTagNumber");
             modelBuilder.Entity<Pig>().Property(p => p.MotherTagNumber).HasColumnName("MotherTagNumber");
             modelBuilder.Entity<Cattle>().Property(c => c.MotherTagNumber).HasColumnName("MotherTagNumber");
