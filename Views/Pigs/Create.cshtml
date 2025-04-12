@@ -12,7 +12,7 @@
                     <h4>Add New Pig</h4>
                 </div>
                 <div class="card-body">
-                    <form asp-action="Create" method="post" id="pigForm">
+                    <form asp-action="Create" method="post" id="pigForm" enctype="multipart/form-data">
 
                         <!-- Tag Number -->
                         <div class="form-group">
@@ -79,6 +79,12 @@
                             <label asp-for="MotherTagNumber" class="control-label"></label>
                             <input asp-for="MotherTagNumber" class="form-control" placeholder="Enter Mother's Tag Number" />
                             <span asp-validation-for="MotherTagNumber" class="text-danger"></span>
+                        </div>
+
+                        <!--Upload Image-->
+                        <div class="form-group">
+                            <label>Upload Image</label>
+                            <input type="file" name="imageFile" class="form-control" accept="image/*" />
                         </div>
 
 

@@ -1,35 +1,24 @@
-﻿@model ZambaFarm.Models.Rabbit
+﻿@model ZambaFarm.Models.Duck
 
 @{
     ViewData["Title"] = "Create";
 }
-
-<h1>Create</h1>
-
-<h4>Rabbit</h4>
-<hr />
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card ">
                 <div class="card-header bg-primary text-white text-center">
-                    <h4>Add New Rabbit</h4>
+                    <h4>Add New Duck</h4>
                 </div>
                 <div class="card-body">
-                    <form asp-action="Create" method="post" id="RabbitForm" enctype="multipart/form-data">
+                    <form asp-action="Create" method="post" id="DuckForm">
 
                         <!-- Tag Number -->
                         <div class="form-group">
                             <label asp-for="TagNumber" class="control-label"></label>
                             <input asp-for="TagNumber" class="form-control" />
                             <span asp-validation-for="TagNumber" class="text-danger"></span>
-                        </div>
-                        <!--Cage Number-->
-                        <div class="form-group">
-                            <label asp-for="Cage" class="control-label"></label>
-                            <input asp-for="Cage" class="form-control" />
-                            <span asp-validation-for="Cage" class="text-danger"></span>
                         </div>
 
                         <!-- Gender -->
@@ -53,28 +42,28 @@
                         <!-- Is Pregnant -->
                         <div class="form-group form-check">
                             <label class="form-check-label">
-                                <input class="form-check-input" asp-for="IsPregnant" /> @Html.DisplayNameFor(model => model.IsPregnant)
+                                <input class="form-check-input" asp-for="IsEggLaying" /> @Html.DisplayNameFor(model => model.IsEggLaying)
                             </label>
                         </div>
 
                         <!-- Is Nursing -->
                         <div class="form-group form-check">
                             <label class="form-check-label">
-                                <input class="form-check-input" asp-for="IsNursing" id="isNursingCheckbox" /> @Html.DisplayNameFor(model => model.IsNursing)
+                                <input class="form-check-input" asp-for="IsEggLaying" id="isNursingCheckbox" /> @Html.DisplayNameFor(model => model.IsEggLaying)
                             </label>
                         </div>
 
-                        <!-- Number of Babies Being Nursed -->
+                        <!-- Number of Chicks Being laid -->
                         <div class="form-group" id="numberOfBabiesDiv" style="display: none;">
-                            <label asp-for="NumberOfBabiesNursed" class="control-label"></label>
-                            <input asp-for="NumberOfBabiesNursed" type="number" class="form-control" />
-                            <span asp-validation-for="NumberOfBabiesNursed" class="text-danger"></span>
+                            <label asp-for="NumberOfEggsLaid" class="control-label"></label>
+                            <input asp-for="NumberOfEggsLaid" type="number" class="form-control" />
+                            <span asp-validation-for="NumberOfEggsLaid" class="text-danger"></span>
                         </div>
 
                         <!-- Is Mating -->
                         <div class="form-group form-check">
                             <label class="form-check-label">
-                                <input class="form-check-input" asp-for="IsMating" /> @Html.DisplayNameFor(model => model.IsMating)
+                                <input class="form-check-input" asp-for="MatingDate" /> @Html.DisplayNameFor(model => model.MatingDate)
                             </label>
                         </div>
 
@@ -98,7 +87,6 @@
                             <input type="file" name="ImageFile" class="form-control" accept="image/*" />
                         </div>
 
-
                         <div class="text-center mt-3">
                             <button type="submit" value="Create" class="btn btn-success">Save</button>
                             <a asp-action="Index" class="btn btn-secondary">Cancel</a>
@@ -109,21 +97,3 @@
         </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    <script>
-        // Show or hide the 'Number of Babies Being Nursed' field based on the 'Is Nursing' checkbox
-        document.getElementById("isNursingCheckbox").addEventListener("change", function () {
-            const numberOfBabiesDiv = document.getElementById("numberOfBabiesDiv");
-            if (this.checked) {
-                numberOfBabiesDiv.style.display = "block";
-            } else {
-                numberOfBabiesDiv.style.display = "none";
-            }
-        });
-    </script>
-}

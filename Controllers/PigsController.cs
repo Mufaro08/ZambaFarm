@@ -37,7 +37,7 @@ namespace ZambaFarm.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PigId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherPigId,MotherTagNumber")] Pig pig)
+        public async Task<IActionResult> Create([Bind("PigId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherPigId,MotherTagNumber")] Pig pig, IFormFile ImageFile)
         {
             if (!ModelState.IsValid)
             {
@@ -48,7 +48,19 @@ namespace ZambaFarm.Controllers
 
             try
             {
-               
+                // Handle image upload
+                if (ImageFile != null && ImageFile.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await ImageFile.CopyToAsync(memoryStream);
+                        pig.Image = memoryStream.ToArray(); // Store image as byte[]
+                    }
+                }
+                else
+                {
+                    pig.Image = null; // Allow storing without an image
+                }
 
                 // Add the main pig (mother)
                 _context.Pigs.Add(pig);
@@ -134,7 +146,7 @@ namespace ZambaFarm.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PigId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherPigId,MotherTagNumber, Offspring")] Pig pig )
+        public async Task<IActionResult> Edit(int id, [Bind("PigId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherPigId,MotherTagNumber, Offspring")] Pig pig, IFormFile imageFile )
         {
             if (id != pig.PigId)
             {
@@ -150,6 +162,38 @@ namespace ZambaFarm.Controllers
 
             try
             {
+                var existingPig = await _context.Pigs.FindAsync(id);
+                if (existingPig == null)
+                {
+                    TempData["ErrorMessage"] = "Rabbit not found.";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                // Update fields except image
+                existingPig.TagNumber = pig.TagNumber;
+                existingPig.Gender = pig.Gender;
+                existingPig.BirthDate = pig.BirthDate;
+                existingPig.IsPregnant = pig.IsPregnant;
+                existingPig.IsNursing = pig.IsNursing;
+                existingPig.IsMating = pig.IsMating;
+                existingPig.MatingDate = pig.MatingDate;
+                existingPig.NumberOfBabiesNursed = pig.NumberOfBabiesNursed;
+                existingPig.MotherPigId = pig.MotherPigId;
+                existingPig.MotherTagNumber = pig.MotherTagNumber;
+                // 🖼️ Handle Image Upload - Only update if a new image is uploaded
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await imageFile.CopyToAsync(memoryStream);
+                        existingPig.Image = memoryStream.ToArray(); // Store image as byte array
+                    }
+                }
+                else
+                {
+                    imageFile = null;
+                }
+
                 // Check if the pig is nursing and generate offspring
                 if (pig.IsNursing)
                 {

@@ -14,6 +14,8 @@ namespace ZambaFarm.Models
         public DbSet<Cattle> Cattles { get; set; }
         public DbSet<Goat> Goats { get; set; }
         public DbSet<Turkey> Turkeys { get; set; }
+        public  DbSet<Chicken> Chickens { get; set; }
+        public  DbSet<Duck> Ducks { get; set; }
        // public DbSet<ApplicationUser> Users { get; set; } = default!;
 
         public FarmContext(DbContextOptions<FarmContext> options)
@@ -96,6 +98,12 @@ namespace ZambaFarm.Models
                 throw new Exception($"Error deleting entity: {ex.Message}");
             }
         }
+
+        // Delete an entity
+        public DbSet<ZambaFarm.Models.Duck> Duck { get; set; } = default!;
+
+        // Delete an entity
+        public DbSet<ZambaFarm.Models.Chicken> Chicken { get; set; } = default!;
     }
 }
 

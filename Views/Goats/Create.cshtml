@@ -8,11 +8,11 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card ">
-                <div class="card-header bg-primary text-white text-center">
+                <div class="card-header bg-primary text-white text-center" >
                     <h4>Add New Goat</h4>
                 </div>
                 <div class="card-body">
-                    <form asp-action="Create" method="post" id="goatForm">
+                    <form asp-action="Create" method="post" id="goatForm" enctype="multipart/form-data">
 
                         <!-- Tag Number -->
                         <div class="form-group">
@@ -81,6 +81,11 @@
                             <span asp-validation-for="MotherTagNumber" class="text-danger"></span>
                         </div>
 
+                        <!--Upload Image-->
+                        <div class="form-group">
+                            <label>Upload Image</label>
+                            <input type="file" name="ImageFile" class="form-control" accept="image/*" />
+                        </div>
 
                         <div class="text-center mt-3">
                             <button type="submit" class="btn btn-success">Save</button>

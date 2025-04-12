@@ -37,7 +37,7 @@ namespace ZambaFarm.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GoatId,TagNumber,Gender,BirthDate,IsNursing,NumberOfBabiesNursed,MotherGoatId,MotherTagNumber")] Goat goat)
+        public async Task<IActionResult> Create([Bind("GoatId,TagNumber,Gender,BirthDate,IsNursing,NumberOfBabiesNursed,MotherGoatId,MotherTagNumber")] Goat goat, IFormFile ImageFile)
         {
             if (!ModelState.IsValid)
             {
@@ -47,6 +47,20 @@ namespace ZambaFarm.Controllers
 
             try
             {
+                // Handle image upload
+                if (ImageFile != null && ImageFile.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await ImageFile.CopyToAsync(memoryStream);
+                        goat.Image = memoryStream.ToArray(); // Store image as byte[]
+                    }
+                }
+                else
+                {
+                    goat.Image = null; // Allow storing without an image
+                }
+
                 _context.Goats.Add(goat);
                 await _context.SaveChangesAsync();
 

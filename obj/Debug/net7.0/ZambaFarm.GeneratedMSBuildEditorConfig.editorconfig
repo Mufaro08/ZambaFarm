@@ -204,8 +204,48 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0dGxlc1xJbmRleGVkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Chickens/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hpY2tlbnNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Chickens/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hpY2tlbnNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Chickens/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hpY2tlbnNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Chickens/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hpY2tlbnNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Chickens/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hpY2tlbnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Mfaro/source/repos/ZambaFarm/Views/Dashboard/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Ducks/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRHVja3NcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Ducks/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRHVja3NcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Ducks/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRHVja3NcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Ducks/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRHVja3NcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mfaro/source/repos/ZambaFarm/Views/Ducks/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRHVja3NcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mfaro/source/repos/ZambaFarm/Views/Goats/Create.cshtml]

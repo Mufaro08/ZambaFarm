@@ -10,6 +10,8 @@ namespace ZambaFarm.Models
         [Required(ErrorMessage = "Tag Number is required.")]
         public string TagNumber { get; set; }
 
+        public byte[]? Image { get; set; }
+
         [Required(ErrorMessage = "Gender is required.")]
         [RegularExpression("Male|Female", ErrorMessage = "Gender must be either 'Male' or 'Female'.")]
         public string Gender { get; set; }

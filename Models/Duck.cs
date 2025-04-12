@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ZambaFarm.Models
 {
-    public class Turkey
+    public class Duck
     {
-        public int TurkeyId { get; set; }
+        public int DuckId { get; set; }
 
         [Required(ErrorMessage = "Tag Number is required.")]
         public string TagNumber { get; set; }
@@ -22,11 +22,11 @@ namespace ZambaFarm.Models
         [Display(Name = "Is Mated")]
         public bool IsMated { get; set; }
 
-        public int? NumberOfEggsLaid { get; set; }  // Nullable to track number of eggs laid by turkey
+        public int? NumberOfEggsLaid { get; set; }  // Nullable to track number of eggs laid by duck
 
         public DateTime? MatingDate { get; set; }
 
-        public int? MotherTurkeyId { get; set; }
+        public int? MotherDuckId { get; set; }
         public string? MotherTagNumber { get; set; }
 
         public bool IsEggLaying { get; set; }
@@ -35,17 +35,17 @@ namespace ZambaFarm.Models
 
         public DateTime DateAdded { get; set; } = DateTime.Now;
         public DateTime? EggLayingDate => IsMated && MatingDate.HasValue
-            ? MatingDate.Value.AddDays(28)  // Turkeys have a 28-day incubation period for eggs
+            ? MatingDate.Value.AddDays(28)  // ducks have a 28-day incubation period for eggs
             : (DateTime?)null;
 
         public string Status => Gender == "Female"
             ? (IsMated ? "Mated" : "None")
             : "None";
 
-        public virtual ICollection<Turkey> Offspring { get; set; } = new List<Turkey>();
+        public virtual ICollection<Duck> Offspring { get; set; } = new List<Duck>();
 
         [BindNever]
-        public virtual Turkey? Mother { get; set; }
+        public virtual Duck? Mother { get; set; }
 
         public void AddEggs()
         {
@@ -53,7 +53,7 @@ namespace ZambaFarm.Models
             {
                 for (int i = 0; i < NumberOfEggsLaid.Value; i++)
                 {
-                    Offspring.Add(new Turkey
+                    Offspring.Add(new Duck
                     {
                         TagNumber = $"Egg-{i + 1}-{Guid.NewGuid().ToString().Substring(0, 5)}",
                         Gender = "Unknown",

@@ -37,7 +37,7 @@ namespace ZambaFarm.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CattleId,TagNumber,Gender,BirthDate,IsPregnant,NumberOfBabiesNursed,IsMating,MatingDate,MotherCattleId,MotherTagNumber")] Cattle cattle)
+        public async Task<IActionResult> Create([Bind("CattleId,TagNumber,Gender,BirthDate,IsPregnant,NumberOfBabiesNursed,IsMating,MatingDate,MotherCattleId,MotherTagNumber")] Cattle cattle, IFormFile ImageFile)
         {
             if (!ModelState.IsValid)
             {
@@ -48,6 +48,20 @@ namespace ZambaFarm.Controllers
 
             try
             {
+                // Handle image upload
+                if (ImageFile != null && ImageFile.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await ImageFile.CopyToAsync(memoryStream);
+                        cattle.Image = memoryStream.ToArray(); // Store image as byte[]
+                    }
+                }
+                else
+                {
+                    cattle.Image = null; // Allow storing without an image
+                }
+
                 _context.Cattles.Add(cattle);
                 await _context.SaveChangesAsync();
 

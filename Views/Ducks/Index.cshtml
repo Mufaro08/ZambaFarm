@@ -1,0 +1,171 @@
+﻿@model IEnumerable<ZambaFarm.Models.Duck>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container mt-5">
+    <!-- Page Header -->
+    <div class="row justify-content-between align-items-center mb-4">
+        <div class="col-md-8">
+            <h2 class="text-primary">Duck Dashboard</h2>
+            <p class="text-muted">Overview of all registered ducks</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <a asp-action="Create" class="btn btn-success"><i class="bi bi-plus-circle me-2"></i>Add New Duck</a>
+        </div>
+    </div>
+
+    <!-- Table for Duck Data -->
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered align-middle">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>#</th>
+                    <th>Tag Number</th>
+                    <th>Gender</th>
+                    <th>Birth Date</th>
+
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">No ducks found.</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var duck in Model)
+                    {
+                        <tr>
+                            <td class="text-center">@duck.DuckId</td>
+                            <td>@duck.TagNumber</td>
+                            <td>@duck.Gender</td>
+                            <td>@duck.BirthDate.ToShortDateString()</td>
+
+                            <td class="text-center">
+                                <div class="d-flex justify-content-center">
+                                    <a asp-action="Details" asp-route-id="@duck.DuckId" class="btn btn-info btn-sm me-2">
+                                        <i class="bi bi-info-circle"></i> Details
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@duck.DuckId" class="btn btn-warning btn-sm me-2">
+                                        <i class="bi bi-pencil"></i> Edit
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@duck.DuckId" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<!--
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TagNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BirthDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsMated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfEggsLaid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MatingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MotherTagNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsEggLaying)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfEggs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateAdded)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mother)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TagNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Image)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BirthDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsMated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfEggsLaid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MatingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MotherTagNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsEggLaying)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfEggs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateAdded)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mother.Gender)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DuckId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.DuckId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.DuckId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+-->

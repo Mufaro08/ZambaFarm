@@ -1,10 +1,10 @@
-﻿@model ZambaFarm.Models.Cattle
+﻿@model ZambaFarm.Models.Duck
 
 @{
     ViewData["Title"] = "Details";
 
 
-// Calculate Age
+    // Calculate Age
     int years = DateTime.Now.Year - Model.BirthDate.Year;
     int months = DateTime.Now.Month - Model.BirthDate.Month;
 
@@ -21,24 +21,22 @@
     <div class="animated-border"></div>
     <div class="details-card">
         <div class="card-body">
-            <h2 class="text-primary">Cattle Details</h2>
-            <p class="text-muted">View detailed information about the cattle.</p>
-            <hr />
+            <h2 class="text-primary">Ducks Details</h2>
+            <hr>
 
-             <!-- 🖼️ Display Cattle Image Above Table -->
+            <!-- 🖼️ Display Duck Image Above Table -->
             <div class="text-center mb-3">
-                @if (Model.Image != null && Model.Image.Length > 0)
-                {
+                    @if (Model.Image != null && Model.Image.Length > 0)
+                    {
                     <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Image)"
-                         alt="Cattle Image" class="img-fluid rounded shadow" width="250" 
+                         alt="Duck Image" class="img-fluid rounded shadow" width="250"
                          style="max-width: 100%; height: auto; object-fit: cover; border-radius: 10px;" />
-                }
-                else
-                {
+                    }
+                    else
+                    {
                     <p class="text-muted">No image available.</p>
-                }
+                    }
             </div>
-
             <table class="table table-bordered">
                 <tbody>
                     <!-- Display Tag Number -->
@@ -47,14 +45,13 @@
                         <td>@Model.TagNumber</td>
                     </tr>
 
-                    <!-- Display Gender -->
+                   <!-- Display Gender -->
                     <tr class="text-white fw-bolder">
                         <th>Gender</th>
                         <td>@Model.Gender</td>
                     </tr>
 
                     <!-- Display Age -->
-
                     <tr class="text-white">
                         <th>Age</th>
                         <td>@ageText</td>
@@ -65,11 +62,11 @@
                         {
                         <tr class="text-white">
                             <th>Is Pregnant</th>
-                            <td>@(Model.IsPregnant ? "Yes" : "No")</td>
+                            <td>@(Model.IsMated ? "Yes" : "No")</td>
                         </tr>
                         <tr class="text-white">
                             <th>Is Nursing</th>
-                            <td>@(Model.IsNursing ? "Yes" : "No")</td>
+                            <td>@(Model.IsEggLaying ? "Yes" : "No")</td>
                         </tr>
                         <tr class="text-white">
                             <th>Mating Date</th>
@@ -77,7 +74,7 @@
                         </tr>
                         <tr class="text-white">
                             <th>Predicted Delivery Date</th>
-                            <td>@(Model.DeliveryDate?.ToShortDateString() ?? "N/A")</td>
+                            <td>@(Model.EggLayingDate?.ToShortDateString() ?? "N/A")</td>
                         </tr>
                         }
 
@@ -93,10 +90,10 @@
                         <td>
                                 @if (!string.IsNullOrEmpty(Model.MotherTagNumber))
                                 {
-                                    var mother = ViewData["MotherDetails"] as ZambaFarm.Models.Cattle;
+                                    var mother = ViewData["MotherDetails"] as ZambaFarm.Models.Duck;
                                     if (mother != null)
                                     {
-                                    <a asp-action="Details" asp-route-id="@mother.CattleId">
+                                    <a asp-action="Details" asp-route-id="@mother.DuckId">
                                             @Model.MotherTagNumber
                                     </a>
                                     }
@@ -133,7 +130,7 @@
                                             string babyAge = babyYears > 0 ? $"{babyYears} years {babyMonths} months" : $"{babyMonths} months";
 
                                         <li>
-                                            <a asp-action="Details" asp-route-id="@baby.CattleId">
+                                            <a asp-action="Details" asp-route-id="@baby.DuckId">
                                                 Tag: @baby.TagNumber, Age: @babyAge
                                             </a>
                                         </li>
@@ -149,12 +146,108 @@
                 </tbody>
             </table>
 
-
-            <div class="mb-3 text-md-end">
-                <a asp-action="Edit" asp-route-id="@Model.CattleId" class="btn btn-warning">Edit</a>
-                <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
+            <!-- Action Buttons -->
+            <div class="mt-3">
+                <a asp-action="Edit" asp-route-id="@Model.DuckId" class="btn btn-warning">
+                    <i class="bi bi-pencil"></i> Edit
+                </a>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to List
+                </a>
             </div>
         </div>
     </div>
-
 </div>
+
+
+
+
+
+
+
+<!--
+<h1>Details</h1>
+
+<div>
+    <h4>Duck</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TagNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TagNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Image)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BirthDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsMated)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsMated)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NumberOfEggsLaid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NumberOfEggsLaid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MatingDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MatingDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MotherTagNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MotherTagNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsEggLaying)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsEggLaying)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NumberOfEggs)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NumberOfEggs)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateAdded)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateAdded)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Mother)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Mother.Gender)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.DuckId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+-->

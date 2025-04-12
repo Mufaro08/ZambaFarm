@@ -6,6 +6,7 @@ namespace ZambaFarm.Models
 public class Rabbit
 {
     public int RabbitId { get; set; }
+    public byte[]? Image { get; set; }
 
     [Required(ErrorMessage = "Tag Number is required.")]
     public string TagNumber { get; set; }
@@ -16,9 +17,9 @@ public class Rabbit
 
     [Required(ErrorMessage = "Birth Date is required.")]
     public DateTime BirthDate { get; set; }
-        public int Cage { get; set; }
+    public int Cage { get; set; }
 
-        [Display(Name = "Is Pregnant")]
+    [Display(Name = "Is Pregnant")]
     public bool IsPregnant { get; set; }
 
     [Display(Name = "Is Nursing")]
@@ -30,10 +31,10 @@ public class Rabbit
 
     public int? MotherRabbitId { get; set; }
     public string? MotherTagNumber { get; set; }
-        public DateTime DateAdded { get; set; } = DateTime.Now;
+    public DateTime DateAdded { get; set; } = DateTime.Now;
 
-        public DateTime? DeliveryDate => IsPregnant && MatingDate.HasValue
-        ? MatingDate.Value.AddDays(30)
+    public DateTime? DeliveryDate => IsPregnant && MatingDate.HasValue
+       ? MatingDate.Value.AddDays(30)
         : (DateTime?)null;
 
     public string Status => Gender == "Female"
@@ -67,25 +68,6 @@ public class Rabbit
               }
           }
       }
-        /*
-        public void AddNursedBabies()
-        {
-            if (IsNursing && NumberOfBabiesNursed.HasValue)
-            {
-                for (int i = 0; i < NumberOfBabiesNursed.Value; i++)
-                {
-                    Offspring.Add(new Rabbit
-                    {
-                        TagNumber = $"Baby-{i + 1}-{Guid.NewGuid().ToString().Substring(0, 5)}",
-                        Gender = "Unknown",
-                        BirthDate = DateTime.Now,
-                        MotherRabbitId = this.RabbitId, // ✅ Link offspring using RabbitId
-                        Mother = this
-                    });
-                }
-            }
-        }*/
-
-
+        
     }
 }

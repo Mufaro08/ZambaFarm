@@ -1,15 +1,6 @@
-﻿
+﻿<div id="speciesChart" style="width: 100%; height: 400px;"></div>
 
-
-
-
-
-
-
-
-
-
-<div id="speciesChart" style="width: 100%; height: 400px;"></div>
+<h2>Overall Statistics Dashboad </h2>
 
 <script src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
@@ -22,7 +13,8 @@
             ['Rabbits', @ViewBag.TotalRabbits],
             ['Pigs', @ViewBag.TotalPigs],
             ['Cattles', @ViewBag.TotalCattles],
-            ['Goats', @ViewBag.TotalGoats]
+            ['Goats', @ViewBag.TotalGoats],
+            ['Turkeys', @ViewBag.TotalTurkeys]
         ]);
 
         var options = {

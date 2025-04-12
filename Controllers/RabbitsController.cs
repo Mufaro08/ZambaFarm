@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace ZambaFarm.Controllers
 {
@@ -37,7 +38,7 @@ namespace ZambaFarm.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("RabbitId,TagNumber,Gender,BirthDate,IsPregnant,Cage,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherRabbitId,MotherTagNumber")] Rabbit rabbit)
+        public async Task<IActionResult> Create([Bind("RabbitId,TagNumber,Gender,BirthDate,IsPregnant,Cage,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherRabbitId,MotherTagNumber")] Rabbit rabbit, IFormFile ImageFile)
         {
             if (!ModelState.IsValid)
             {
@@ -48,7 +49,19 @@ namespace ZambaFarm.Controllers
 
             try
             {
-                
+                // Handle image upload
+                if (ImageFile != null && ImageFile.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await ImageFile.CopyToAsync(memoryStream);
+                        rabbit.Image = memoryStream.ToArray(); // Store image as byte[]
+                    }
+                }
+                else
+                {
+                    rabbit.Image = null; // Allow storing without an image
+                }
 
                 // Add the main rabbit (mother)
                 _context.Rabbits.Add(rabbit);
@@ -105,7 +118,6 @@ namespace ZambaFarm.Controllers
             }
         }
 
-        /*
         // GET: Rabbits/Edit/5
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
@@ -117,15 +129,11 @@ namespace ZambaFarm.Controllers
 
             try
             {
-                var rabbit = await _context.Rabbits
-                    .Include(r => r.Offspring) // ✅ Ensure offspring are included
-                    .FirstOrDefaultAsync(r => r.RabbitId == id);
-
+                var rabbit = await _context.Rabbits.FindAsync(id);
                 if (rabbit == null)
                 {
                     return RedirectToAction("Error", new { message = "Rabbit not found." });
                 }
-
                 return View(rabbit);
             }
             catch (Exception ex)
@@ -134,52 +142,52 @@ namespace ZambaFarm.Controllers
             }
         }
 
-        // POST: Rabbits/Edit/5
+        //  GET: Rabbits/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("RabbitId,TagNumber,Gender,BirthDate,IsPregnant,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherRabbitId")] Rabbit updatedRabbit)
+        public async Task<IActionResult> Edit(int id, [Bind("RabbitId,TagNumber,Gender,BirthDate,IsPregnant,Cage,IsNursing,IsMating,MatingDate,NumberOfBabiesNursed,MotherRabbitId,MotherTagNumber")] Rabbit rabbit, IFormFile? imageFile)
         {
-            if (id != updatedRabbit.RabbitId)
-            {
-                return RedirectToAction("Error", new { message = "Rabbit ID mismatch." });
-            }
-
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
                 TempData["ErrorMessage"] = "Validation failed: " + string.Join(", ", errors);
-                return View(updatedRabbit);
+                return View(rabbit);
             }
 
             try
             {
-                var existingRabbit = await _context.Rabbits
-                    .Include(r => r.Offspring) // ✅ Include offspring to keep the relationship
-                    .FirstOrDefaultAsync(r => r.RabbitId == id);
-
+                var existingRabbit = await _context.Rabbits.FindAsync(id);
                 if (existingRabbit == null)
                 {
-                    return RedirectToAction("Error", new { message = "Rabbit not found in database." });
+                    TempData["ErrorMessage"] = "Rabbit not found.";
+                    return RedirectToAction(nameof(Index));
                 }
 
-                // ✅ Update only the fields that changed
-                existingRabbit.TagNumber = updatedRabbit.TagNumber;
-                existingRabbit.Gender = updatedRabbit.Gender;
-                existingRabbit.BirthDate = updatedRabbit.BirthDate;
-                existingRabbit.IsPregnant = updatedRabbit.IsPregnant;
-                existingRabbit.IsNursing = updatedRabbit.IsNursing;
-                existingRabbit.IsMating = updatedRabbit.IsMating;
-                existingRabbit.MatingDate = updatedRabbit.MatingDate;
-                existingRabbit.NumberOfBabiesNursed = updatedRabbit.NumberOfBabiesNursed;
-                existingRabbit.MotherRabbitId = updatedRabbit.MotherRabbitId;
+                // Update fields except image
+                existingRabbit.TagNumber = rabbit.TagNumber;
+                existingRabbit.Gender = rabbit.Gender;
+                existingRabbit.BirthDate = rabbit.BirthDate;
+                existingRabbit.IsPregnant = rabbit.IsPregnant;
+                existingRabbit.Cage = rabbit.Cage;
+                existingRabbit.IsNursing = rabbit.IsNursing;
+                existingRabbit.IsMating = rabbit.IsMating;
+                existingRabbit.MatingDate = rabbit.MatingDate;
+                existingRabbit.NumberOfBabiesNursed = rabbit.NumberOfBabiesNursed;
+                existingRabbit.MotherRabbitId = rabbit.MotherRabbitId;
+                existingRabbit.MotherTagNumber = rabbit.MotherTagNumber;
 
-                // ✅ Ensure offspring remain linked
-                foreach (var baby in existingRabbit.Offspring)
+                // 🖼️ Handle Image Upload - Only update if a new image is uploaded
+                if (imageFile != null && imageFile.Length > 0)
                 {
-                    baby.MotherRabbitId = existingRabbit.RabbitId;
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await imageFile.CopyToAsync(memoryStream);
+                        existingRabbit.Image = memoryStream.ToArray(); // Store image as byte array
+                    }
                 }
 
+                _context.Update(existingRabbit);
                 await _context.SaveChangesAsync();
 
                 TempData["SuccessMessage"] = "Rabbit updated successfully!";
@@ -188,19 +196,16 @@ namespace ZambaFarm.Controllers
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = $"Error updating rabbit: {ex.Message}";
-                return View(updatedRabbit);
+                return View(rabbit);
             }
-        }*/
+        }
 
 
 
 
 
 
-
-
-        
-        // GET: Rabbits/Edit/5
+        /* // GET: Rabbits/Edit/5
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -274,6 +279,7 @@ namespace ZambaFarm.Controllers
                 return View(rabbit);
             }
         }
+        */
 
         // GET: Rabbits/Delete/5
         [Authorize(Roles = "Admin")]

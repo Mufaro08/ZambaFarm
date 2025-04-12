@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZambaFarm.Models;
 
@@ -11,9 +12,11 @@ using ZambaFarm.Models;
 namespace ZambaFarm.Migrations
 {
     [DbContext(typeof(FarmContext))]
-    partial class FarmContextModelSnapshot : ModelSnapshot
+    [Migration("20250411175804_7Create")]
+    partial class _7Create
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -283,112 +286,6 @@ namespace ZambaFarm.Migrations
                     b.HasIndex("MotherCattleId");
 
                     b.ToTable("Cattles");
-                });
-
-            modelBuilder.Entity("ZambaFarm.Models.Chicken", b =>
-                {
-                    b.Property<int>("ChickenId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChickenId"));
-
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<bool>("IsEggLaying")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsMated")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("MatingDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("MotherChickenId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MotherTagNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("NumberOfEggs")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NumberOfEggsLaid")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TagNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ChickenId");
-
-                    b.HasIndex("MotherChickenId");
-
-                    b.ToTable("Chicken");
-                });
-
-            modelBuilder.Entity("ZambaFarm.Models.Duck", b =>
-                {
-                    b.Property<int>("DuckId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DuckId"));
-
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<bool>("IsEggLaying")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsMated")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("MatingDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("MotherDuckId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MotherTagNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("NumberOfEggs")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NumberOfEggsLaid")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TagNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("DuckId");
-
-                    b.HasIndex("MotherDuckId");
-
-                    b.ToTable("Duck");
                 });
 
             modelBuilder.Entity("ZambaFarm.Models.Goat", b =>
@@ -688,24 +585,6 @@ namespace ZambaFarm.Migrations
                     b.Navigation("Mother");
                 });
 
-            modelBuilder.Entity("ZambaFarm.Models.Chicken", b =>
-                {
-                    b.HasOne("ZambaFarm.Models.Chicken", "Mother")
-                        .WithMany("Offspring")
-                        .HasForeignKey("MotherChickenId");
-
-                    b.Navigation("Mother");
-                });
-
-            modelBuilder.Entity("ZambaFarm.Models.Duck", b =>
-                {
-                    b.HasOne("ZambaFarm.Models.Duck", "Mother")
-                        .WithMany("Offspring")
-                        .HasForeignKey("MotherDuckId");
-
-                    b.Navigation("Mother");
-                });
-
             modelBuilder.Entity("ZambaFarm.Models.Goat", b =>
                 {
                     b.HasOne("ZambaFarm.Models.Goat", "Mother")
@@ -743,16 +622,6 @@ namespace ZambaFarm.Migrations
                 });
 
             modelBuilder.Entity("ZambaFarm.Models.Cattle", b =>
-                {
-                    b.Navigation("Offspring");
-                });
-
-            modelBuilder.Entity("ZambaFarm.Models.Chicken", b =>
-                {
-                    b.Navigation("Offspring");
-                });
-
-            modelBuilder.Entity("ZambaFarm.Models.Duck", b =>
                 {
                     b.Navigation("Offspring");
                 });
