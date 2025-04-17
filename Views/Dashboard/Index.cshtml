@@ -14,19 +14,76 @@
             ['Pigs', @ViewBag.TotalPigs],
             ['Cattles', @ViewBag.TotalCattles],
             ['Goats', @ViewBag.TotalGoats],
-            ['Turkeys', @ViewBag.TotalTurkeys]
+            ['Turkeys', @ViewBag.TotalTurkeys],
+            ['Chickens', @ViewBag.TotalChickens],
+            ['Ducks', @ViewBag.TotalDucks]
         ]);
 
         var options = {
             title: 'Animal Species Counts',
-            chartArea: { width: '50%' },
+            chartArea: {
+                width: '50%',
+                backgroundColor: { fill: '#f9f9f9' }
+            },
             hAxis: {
                 title: 'Count',
-                minValue: 0
+                    titleTextStyle: { color: '#2e2e2e', fontSize: 16, fontName: 'Verdana', bold: true },
+                minValue: 0,
+                textStyle: { color: '#444', fontSize: 12, fontName: 'Verdana' }
             },
             vAxis: {
-                title: 'Species'
-            }
+                title: 'Species',
+                titleTextStyle: { color: '#2e2e2e', fontSize: 16, fontName: 'Verdana', bold: true },
+                textStyle: { color: '#444', fontSize: 12, fontName: 'Verdana' }
+            }                            
+        };
+
+        var chart = new google.visualization.BarChart(document.getElementById('speciesChart'));
+        chart.draw(data, options);
+    }
+</script>  
+
+
+<!--
+<script>
+    google.charts.load('current', { packages: ['corechart', 'bar'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Species', 'Count'],
+            ['Rabbits', @ViewBag.TotalRabbits],
+            ['Pigs', @ViewBag.TotalPigs],
+            ['Cattles', @ViewBag.TotalCattles],
+            ['Goats', @ViewBag.TotalGoats],
+            ['Turkeys', @ViewBag.TotalTurkeys],
+            ['Chickens', @ViewBag.TotalChickens],
+            ['Ducks', @ViewBag.TotalDucks]
+        ]);
+
+        var options = {
+            title: 'Animal Species Counts',
+            chartArea: {
+                width: '60%',
+                backgroundColor: { fill: '#f9f9f9' } // Elegant light background
+            },
+            hAxis: {
+                title: 'Count',
+                titleTextStyle: { color: '#2e2e2e', fontSize: 16, fontName: 'Verdana', bold: true },
+                minValue: 0,
+                textStyle: { color: '#444', fontSize: 12, fontName: 'Verdana' }
+            },
+            vAxis: {
+                title: 'Species',
+                titleTextStyle: { color: '#2e2e2e', fontSize: 16, fontName: 'Verdana', bold: true },
+                textStyle: { color: '#444', fontSize: 12, fontName: 'Verdana' }
+            },
+            colors: ['#6a1b9a'], // Chic purple for the bars
+            legend: {
+                position: 'top',
+                textStyle: { color: '#555', fontSize: 14, fontName: 'Arial' }
+            },
+           // bar: { groupWidth: '70%' } // Sleeker bars for a classy touch
         };
 
         var chart = new google.visualization.BarChart(document.getElementById('speciesChart'));
@@ -34,3 +91,6 @@
     }
 </script>
 
+<div id="speciesChart" style="width: 900px; height: 500px; margin: auto; border: 1px solid #ccc; border-radius: 10px; padding: 10px; background: linear-gradient(to bottom, #ffffff, #f0f0f0); box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);">
+</div>
+-->

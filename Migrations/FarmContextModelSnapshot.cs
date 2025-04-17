@@ -312,6 +312,9 @@ namespace ZambaFarm.Migrations
                     b.Property<bool>("IsMated")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("IsNursing")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("MatingDate")
                         .HasColumnType("datetime2");
 

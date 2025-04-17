@@ -22,20 +22,26 @@ namespace ZambaFarm.Controllers
             var allPigs = _context.Pigs.ToList();
             var allCattles = _context.Cattles.ToList();
             var allGoats = _context.Goats.ToList();
-            var allTurkeys = _context.Turkeys.ToList(); // Fetch data for turkeys
+            var allTurkeys = _context.Turkeys.ToList();
+            var allChickens = _context.Chickens.ToList();
+            var allDucks = _context.Ducks.ToList();
 
             // Aggregate data for the dashboard
             var totalRabbits = allRabbits.Count;
             var totalPigs = allPigs.Count;
             var totalCattles = allCattles.Count;
             var totalGoats = allGoats.Count;
-            var totalTurkeys = allTurkeys.Count; // Aggregate data for turkeys
+            var totalTurkeys = allTurkeys.Count;
+            var totalChickens = allChickens.Count;
+            var totalDucks = allDucks.Count;
 
             ViewBag.TotalRabbits = totalRabbits;
             ViewBag.TotalPigs = totalPigs;
             ViewBag.TotalCattles = totalCattles;
             ViewBag.TotalGoats = totalGoats;
-            ViewBag.TotalTurkeys = totalTurkeys; // Pass turkey data to the view
+            ViewBag.TotalTurkeys = totalTurkeys;
+            ViewBag.TotalChickens = totalChickens;
+            ViewBag.TotalDucks = totalDucks;
 
             return View();
         }

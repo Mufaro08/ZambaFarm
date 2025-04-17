@@ -30,6 +30,7 @@ namespace ZambaFarm.Models
         public string? MotherTagNumber { get; set; }
 
         public bool IsEggLaying { get; set; }
+        public int? IsNursing { get; set; }
 
         public int? NumberOfEggs { get; set; } // Nullable to handle the number of eggs properly
 
